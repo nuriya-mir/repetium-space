@@ -1,63 +1,92 @@
 /* ─────────────────────────────────────────────
-   REPETIUM.SPACE · Design Tokens v3
+   REPETIUM.SPACE · Design Tokens v5 (Gradient Puzzle)
    Light mode (default)
 ───────────────────────────────────────────── */
 :root {
-  /* Backgrounds */
-  --paper:   #F4F1EB;
-  --paper-s: #EDEAE2;
-  --paper-e: #E4E0D6;
+  /* Backgrounds — soft lavender-white */
+  --paper:   #F8F6FF;
+  --paper-s: #F1EDFF;
+  --paper-e: #E8E2FA;
 
-  /* Text */
-  --ink:   #1C1A16;
-  --ink-2: #4A4740;
-  --ink-3: #8A8780;
-  --ink-4: #B8B5AE;
+  /* Text — deep violet tinted */
+  --ink:   #1A1535;
+  --ink-2: #3D3460;
+  --ink-3: #7B70A8;
+  --ink-4: #ADA6CC;
 
-  /* Blue (headings, active nav, logo) */
-  --blue:      #3A6EA0;
-  --blue-dim:  rgba(58, 110, 160, 0.13);
-  --blue-line: rgba(58, 110, 160, 0.20);
+  /* Violet zone spectrum (replaces steel blue) */
+  --steel-d: #4C1D95;
+  --steel:   #7C3AED;
+  --steel-l: #A78BFA;
+
+  /* Blue → violet (headings, active nav, logo) */
+  --blue:      #6D28D9;
+  --blue-dim:  rgba(109, 40, 217, 0.10);
+  --blue-line: rgba(109, 40, 217, 0.20);
 
   /* Borders */
-  --rule:   rgba(28, 26, 22, 0.10);
-  --rule-s: rgba(28, 26, 22, 0.05);
+  --rule:   rgba(109, 40, 217, 0.10);
+  --rule-s: rgba(109, 40, 217, 0.05);
 
-  /* Accent — gold */
-  --gold:     #C8942A;
-  --gold-dim: rgba(200, 148, 42, 0.15);
+  /* Accent — amber/gold */
+  --gold:     #B45309;
+  --gold-dim: rgba(180, 83, 9, 0.12);
 
-  /* Feedback: correct proximity — teal glow */
-  --teal:     #3A9E98;
-  --teal-dim: rgba(58, 158, 152, 0.15);
+  /* Feedback: correct — green */
+  --teal:     #047857;
+  --teal-dim: rgba(4, 120, 87, 0.12);
 
   /* Feedback: try again — warm orange (NO RED) */
-  --flicker:     #E66400;
-  --flicker-dim: rgba(230, 100, 0, 0.12);
+  --flicker:     #C2410C;
+  --flicker-dim: rgba(194, 65, 12, 0.12);
 
-  /* Exercise highlights — 4 distinct colors for multi-element exercises */
-  --hl-1: rgba(58, 110, 160, 0.16);
-  --hl-2: rgba(80, 160, 120, 0.18);
-  --hl-3: rgba(160, 100, 60, 0.16);
-  --hl-4: rgba(130, 90, 170, 0.16);
+  /* Exercise highlights */
+  --hl-1: rgba(109, 40, 217, 0.13);
+  --hl-2: rgba(4, 120, 87, 0.15);
+  --hl-3: rgba(180, 83, 9, 0.13);
+  --hl-4: rgba(219, 39, 119, 0.11);
+  --hl-focus: rgba(109, 40, 217, 0.34);
+  --hl-focus-h: rgba(109, 40, 217, 0.52);
 
   /* Feedback tokens (no red anywhere) */
-  --fb-ok:      rgba(58, 110, 160, 0.12);
-  --fb-ok-b:    rgba(58, 110, 160, 0.28);
-  --fb-try:     rgba(180, 140, 80, 0.12);
-  --fb-try-b:   rgba(180, 140, 80, 0.28);
-  --fb-done:    rgba(100, 160, 80, 0.12);
-  --fb-done-b:  rgba(100, 160, 80, 0.28);
+  --fb-ok:      rgba(109, 40, 217, 0.10);
+  --fb-ok-b:    rgba(109, 40, 217, 0.25);
+  --fb-try:     rgba(180, 83, 9, 0.10);
+  --fb-try-b:   rgba(180, 83, 9, 0.25);
+  --fb-done:    rgba(4, 120, 87, 0.10);
+  --fb-done-b:  rgba(4, 120, 87, 0.25);
 
-  /* Button shadows */
-  --shadow-btn:       0 1px 3px rgba(28, 26, 22, 0.10), 0 1px 1px rgba(28, 26, 22, 0.06);
-  --shadow-btn-hover: 0 2px 8px rgba(28, 26, 22, 0.12), 0 1px 2px rgba(28, 26, 22, 0.08);
-  --shadow-btn-press: 0 0px 1px rgba(28, 26, 22, 0.08);
+  /* ── Gradients ── */
+  --grad-primary:   linear-gradient(135deg, #6D28D9 0%, #A855F7 100%);
+  --grad-secondary: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  --grad-aurora:    linear-gradient(135deg, #4F46E5 0%, #7C3AED 45%, #EC4899 100%);
+  --grad-teal:      linear-gradient(135deg, #0891B2 0%, #6D28D9 100%);
+  --grad-gold:      linear-gradient(135deg, #B45309 0%, #D97706 100%);
+
+  /* ── Mesh background ── */
+  --mesh-bg:
+    radial-gradient(at 15% 42%, rgba(139, 92, 246, 0.17) 0px, transparent 55%),
+    radial-gradient(at 84% 14%, rgba(99, 102, 241, 0.13) 0px, transparent 50%),
+    radial-gradient(at 68% 82%, rgba(236, 72, 153, 0.09) 0px, transparent 50%),
+    radial-gradient(at 42% 88%, rgba(109, 40, 217, 0.07) 0px, transparent 45%);
+
+  /* ── Glass (frosted) ── */
+  --glass:        rgba(255, 255, 255, 0.68);
+  --glass-s:      rgba(255, 255, 255, 0.46);
+  --glass-border: rgba(255, 255, 255, 0.82);
+  --glass-blur:   18px;
+  --glass-shadow: 0 4px 24px rgba(109, 40, 217, 0.09), 0 1px 4px rgba(109, 40, 217, 0.05);
+
+  /* Button shadows — violet tinted */
+  --shadow-btn:       0 1px 4px rgba(109, 40, 217, 0.14), 0 1px 1px rgba(109, 40, 217, 0.08);
+  --shadow-btn-hover: 0 3px 14px rgba(109, 40, 217, 0.22), 0 1px 3px rgba(109, 40, 217, 0.12);
+  --shadow-btn-press: 0 0px 2px rgba(109, 40, 217, 0.10);
 
   /* Typography */
-  --font-ui:   'Outfit', sans-serif;
-  --font-read: 'Atkinson Hyperlegible', sans-serif;
-  --font-mono: 'DM Mono', monospace;
+  --font-ui:      'Outfit', sans-serif;
+  --font-read:    'Atkinson Hyperlegible', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+  --font-display: 'Source Serif 4', serif;
 
   /* Font sizes */
   --text-xs:  11px;
@@ -72,7 +101,7 @@
   /* Line heights */
   --leading-tight:  1.3;
   --leading-base:   1.6;
-  --leading-read:   2.0;
+  --leading-read:   2.2;
   --leading-dyslexia: 2.4;
 
   /* Letter spacing */
@@ -95,17 +124,17 @@
   --space-12: 48px;
   --space-16: 64px;
 
-  /* Border radius */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  /* Border radius — more rounded for puzzle aesthetic */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
   --radius-full: 9999px;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(28, 26, 22, 0.08);
-  --shadow-md: 0 4px 12px rgba(28, 26, 22, 0.10);
-  --shadow-lg: 0 8px 24px rgba(28, 26, 22, 0.12);
+  --shadow-sm: 0 1px 4px rgba(109, 40, 217, 0.08);
+  --shadow-md: 0 4px 14px rgba(109, 40, 217, 0.10);
+  --shadow-lg: 0 8px 28px rgba(109, 40, 217, 0.13);
 
   /* Animation */
   --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
@@ -125,42 +154,73 @@
    DARK MODE
 ───────────────────────────────────────────── */
 body.dark {
-  --paper:   #1A1C22;
-  --paper-s: #22242E;
-  --paper-e: #2A2C36;
+  --paper:   #0C0918;
+  --paper-s: #150E28;
+  --paper-e: #1C1438;
 
-  --ink:   #D8D4CE;
-  --ink-2: #9A9890;
-  --ink-3: #6A6C78;
-  --ink-4: #5A5C68;
+  --ink:   #EEE8FF;
+  --ink-2: #C0B4E8;
+  --ink-3: #7A6EA8;
+  --ink-4: #4E4670;
 
-  --blue:      #7AAAD0;
-  --blue-dim:  rgba(122, 170, 208, 0.12);
-  --blue-line: rgba(122, 170, 208, 0.25);
+  --blue:      #A78BFA;
+  --blue-dim:  rgba(167, 139, 250, 0.12);
+  --blue-line: rgba(167, 139, 250, 0.22);
 
-  --rule:   rgba(255, 255, 255, 0.07);
-  --rule-s: rgba(255, 255, 255, 0.04);
+  --rule:   rgba(167, 139, 250, 0.11);
+  --rule-s: rgba(167, 139, 250, 0.06);
 
-  --gold:     #F0C27F;
-  --gold-dim: rgba(240, 194, 127, 0.15);
+  --steel-d: #6D28D9;
+  --steel:   #A78BFA;
+  --steel-l: #C4B5FD;
 
-  --teal:     #4ECDC4;
-  --teal-dim: rgba(78, 205, 196, 0.15);
+  --gold:     #FBBF24;
+  --gold-dim: rgba(251, 191, 36, 0.14);
 
-  --flicker:     #F0916A;
-  --flicker-dim: rgba(240, 145, 106, 0.12);
+  --teal:     #34D399;
+  --teal-dim: rgba(52, 211, 153, 0.14);
 
-  --hl-1: rgba(100, 160, 210, 0.20);
-  --hl-2: rgba(80, 160, 120, 0.22);
-  --hl-3: rgba(200, 130, 80, 0.18);
-  --hl-4: rgba(160, 120, 200, 0.18);
+  --flicker:     #FB923C;
+  --flicker-dim: rgba(251, 146, 60, 0.12);
 
-  --fb-ok:      rgba(100, 160, 210, 0.15);
-  --fb-ok-b:    rgba(100, 160, 210, 0.35);
-  --fb-try:     rgba(200, 160, 80, 0.15);
-  --fb-try-b:   rgba(200, 160, 80, 0.35);
-  --fb-done:    rgba(100, 160, 80, 0.18);
-  --fb-done-b:  rgba(100, 160, 80, 0.30);
+  --hl-1: rgba(167, 139, 250, 0.20);
+  --hl-2: rgba(52, 211, 153, 0.18);
+  --hl-3: rgba(251, 191, 36, 0.16);
+  --hl-4: rgba(244, 114, 182, 0.16);
+  --hl-focus: rgba(167, 139, 250, 0.42);
+  --hl-focus-h: rgba(167, 139, 250, 0.60);
+
+  --fb-ok:      rgba(167, 139, 250, 0.14);
+  --fb-ok-b:    rgba(167, 139, 250, 0.32);
+  --fb-try:     rgba(251, 191, 36, 0.14);
+  --fb-try-b:   rgba(251, 191, 36, 0.32);
+  --fb-done:    rgba(52, 211, 153, 0.14);
+  --fb-done-b:  rgba(52, 211, 153, 0.28);
+
+  --grad-primary:   linear-gradient(135deg, #7C3AED 0%, #C084FC 100%);
+  --grad-secondary: linear-gradient(135deg, #6366F1 0%, #A78BFA 100%);
+  --grad-aurora:    linear-gradient(135deg, #6366F1 0%, #A78BFA 45%, #F472B6 100%);
+  --grad-teal:      linear-gradient(135deg, #22D3EE 0%, #A78BFA 100%);
+  --grad-gold:      linear-gradient(135deg, #FBBF24 0%, #FDE68A 100%);
+
+  --mesh-bg:
+    radial-gradient(at 15% 42%, rgba(124, 58, 237, 0.30) 0px, transparent 55%),
+    radial-gradient(at 84% 14%, rgba(99, 102, 241, 0.22) 0px, transparent 50%),
+    radial-gradient(at 68% 82%, rgba(236, 72, 153, 0.18) 0px, transparent 50%),
+    radial-gradient(at 42% 88%, rgba(109, 40, 217, 0.15) 0px, transparent 45%);
+
+  --glass:        rgba(21, 14, 40, 0.72);
+  --glass-s:      rgba(21, 14, 40, 0.52);
+  --glass-border: rgba(167, 139, 250, 0.14);
+  --glass-shadow: 0 4px 24px rgba(124, 58, 237, 0.18), 0 1px 4px rgba(124, 58, 237, 0.10);
+
+  --shadow-btn:       0 1px 4px rgba(124, 58, 237, 0.22), 0 1px 1px rgba(124, 58, 237, 0.14);
+  --shadow-btn-hover: 0 3px 14px rgba(124, 58, 237, 0.34), 0 1px 3px rgba(124, 58, 237, 0.18);
+  --shadow-btn-press: 0 0px 2px rgba(124, 58, 237, 0.14);
+
+  --shadow-sm: 0 1px 4px rgba(124, 58, 237, 0.14);
+  --shadow-md: 0 4px 14px rgba(124, 58, 237, 0.18);
+  --shadow-lg: 0 8px 28px rgba(124, 58, 237, 0.22);
 }
 
 /* ─────────────────────────────────────────────

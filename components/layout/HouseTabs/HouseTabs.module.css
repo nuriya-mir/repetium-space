@@ -20,14 +20,14 @@
 }
 
 /* Inactive — muted accent color per house */
-.tab[data-accent="blue"] { color: rgba(58, 110, 160, 0.38); }
-.tab[data-accent="gold"] { color: rgba(200, 148, 42,  0.38); }
-.tab[data-accent="teal"] { color: rgba(58, 158, 152, 0.38); }
+.tab[data-accent="blue"] { color: rgba(109, 40, 217, 0.35); }
+.tab[data-accent="gold"] { color: rgba(180, 83, 9, 0.35); }
+.tab[data-accent="teal"] { color: rgba(4, 120, 87, 0.35); }
 
 /* Hover — slightly more saturated */
-.tab[data-accent="blue"]:hover { color: rgba(58, 110, 160, 0.65); }
-.tab[data-accent="gold"]:hover { color: rgba(200, 148, 42,  0.65); }
-.tab[data-accent="teal"]:hover { color: rgba(58, 158, 152, 0.65); }
+.tab[data-accent="blue"]:hover { color: rgba(109, 40, 217, 0.62); }
+.tab[data-accent="gold"]:hover { color: rgba(180, 83, 9, 0.62); }
+.tab[data-accent="teal"]:hover { color: rgba(4, 120, 87, 0.62); }
 
 /* Active — full accent color + underline */
 .tab.active[data-accent="blue"] { color: var(--blue); border-bottom-color: var(--blue); }

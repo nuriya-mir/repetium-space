@@ -4,8 +4,11 @@
   left: 0;
   right: 0;
   height: var(--navbar-h);
-  background: var(--paper);
-  border-bottom: 1px solid var(--rule);
+  background: var(--glass);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 1px 0 var(--glass-border), 0 4px 20px rgba(109, 40, 217, 0.06);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -58,7 +61,7 @@
   width: 18px;
   height: 2px;
   border-radius: 1px;
-  background: var(--blue);
+  background: var(--grad-primary);
 }
 
 .actions {
@@ -72,10 +75,12 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  background: var(--paper-s);
-  border: 1px solid var(--rule);
+  background: var(--glass-s);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   padding: 2px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .localeBtn {
@@ -97,9 +102,9 @@
 }
 
 .localeBtn.localeActive {
-  background: var(--paper);
-  color: var(--blue);
-  box-shadow: var(--shadow-sm);
+  background: var(--grad-primary);
+  color: #fff;
+  box-shadow: 0 1px 6px rgba(109, 40, 217, 0.25);
 }
 
 .iconBtn {
@@ -108,17 +113,55 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--rule);
-  background: transparent;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-s);
   color: var(--ink-3);
   cursor: pointer;
   border-radius: var(--radius-md);
-  transition: color var(--duration-fast), background var(--duration-fast);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: color var(--duration-fast), background var(--duration-fast), box-shadow var(--duration-fast);
 }
 
 .iconBtn:hover {
   color: var(--blue);
   background: var(--blue-dim);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Mobile top bar */
+.mobileTopBar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+  background: var(--glass);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 4px 20px rgba(109, 40, 217, 0.06);
+}
+
+.mobileTopLogo {
+  color: var(--ink);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.mobileTopLocale {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--glass-s);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 2px;
 }
 
 /* Mobile bottom nav */
@@ -128,10 +171,13 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--paper);
-  border-top: 1px solid var(--rule);
+  background: var(--glass);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-top: 1px solid var(--glass-border);
+  box-shadow: 0 -4px 20px rgba(109, 40, 217, 0.06);
   z-index: 100;
-  padding: 8px 0 4px;
+  padding: var(--space-2) 0 var(--space-1);
   grid-template-columns: repeat(5, 1fr);
 }
 
@@ -139,8 +185,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  padding: 4px 0;
+  gap: var(--space-1);
+  padding: var(--space-1) 0;
   color: var(--ink-3);
   text-decoration: none;
   font-size: 12px;
@@ -153,8 +199,37 @@
   color: var(--blue);
 }
 
-.mobileNavLogo {
-  color: var(--ink-3);
+.mobileLocaleWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-1) 0;
+}
+
+.mobileLocaleBtn {
+  display: block;
+  width: 32px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-4);
+  cursor: pointer;
+  letter-spacing: var(--tracking-mono);
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.mobileLocaleBtn:hover {
+  color: var(--ink-2);
+}
+
+.mobileLocaleActive {
+  background: var(--blue-dim);
+  color: var(--blue);
 }
 
 .mobileNavIcon {
@@ -166,7 +241,13 @@
   .navbar {
     display: none;
   }
+  .mobileTopBar {
+    display: flex;
+  }
   .mobileNav {
     display: grid;
+  }
+  .localeBtn {
+    min-height: var(--touch-min);
   }
 }

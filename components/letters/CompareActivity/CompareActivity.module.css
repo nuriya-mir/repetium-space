@@ -7,10 +7,13 @@
 
 .caseToggle {
   display: flex;
-  border: 1px solid var(--rule);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   overflow: hidden;
   align-self: center;
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .caseBtn {
@@ -19,16 +22,16 @@
   font-family: var(--font-ui);
   font-size: var(--text-sm);
   color: var(--ink-3);
-  background: var(--paper-s);
+  background: transparent;
   border: none;
   cursor: pointer;
-  min-height: 36px;
+  min-height: var(--touch-min);
   transition: background var(--duration-fast), color var(--duration-fast);
 }
 
 .caseBtnActive {
-  background: var(--blue);
-  color: var(--paper);
+  background: var(--grad-primary);
+  color: #fff;
 }
 
 .hint {
@@ -50,21 +53,25 @@
   font-family: var(--font-read);
   font-size: var(--text-sm);
   color: var(--blue);
-  background: var(--paper-s);
-  border: 1px solid var(--blue);
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--blue-line);
   border-radius: var(--radius-full);
   cursor: pointer;
-  min-height: 36px;
-  transition: background var(--duration-fast), color var(--duration-fast);
+  min-height: var(--touch-min);
+  transition: background var(--duration-fast), color var(--duration-fast), box-shadow var(--duration-fast);
 }
 
 .pairChip:hover {
-  background: rgba(58, 110, 160, 0.10);
+  background: var(--blue-dim);
+  box-shadow: var(--shadow-sm);
 }
 
 .pairChipActive {
-  background: var(--blue);
-  color: var(--paper);
+  background: var(--grad-primary);
+  border-color: transparent;
+  color: #fff;
 }
 
 /* 9 columns on desktop, 7 on small screens */
@@ -82,24 +89,27 @@
   font-family: var(--font-read);
   font-size: var(--text-base);
   color: var(--ink-2);
-  background: var(--paper-s);
-  border: 1px solid var(--rule);
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   cursor: pointer;
   min-height: 44px;
-  transition: background var(--duration-fast), border-color var(--duration-fast), color var(--duration-fast);
+  transition: background var(--duration-fast), border-color var(--duration-fast), color var(--duration-fast), box-shadow var(--duration-fast);
 }
 
 .letterBtn:hover:not(:disabled) {
   border-color: var(--blue);
   color: var(--blue);
-  background: rgba(58, 110, 160, 0.07);
+  background: rgba(90, 122, 158, 0.07);
 }
 
 .letterBtnActive {
-  background: var(--blue) !important;
-  border-color: var(--blue) !important;
-  color: var(--paper) !important;
+  background: var(--grad-primary) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+  box-shadow: 0 2px 10px rgba(109, 40, 217, 0.30);
 }
 
 .letterBtnDisabled {
@@ -173,16 +183,20 @@
   font-size: var(--text-base);
   font-weight: 600;
   color: var(--blue);
-  background: var(--paper-s);
-  border: 1px solid var(--blue);
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--blue-line);
   border-radius: var(--radius-md);
   cursor: pointer;
-  min-height: 36px;
-  transition: background var(--duration-fast);
+  min-height: var(--touch-min);
+  box-shadow: var(--glass-shadow);
+  transition: background var(--duration-fast), box-shadow var(--duration-fast);
 }
 
 .audioBtn:hover {
-  background: rgba(58, 110, 160, 0.10);
+  background: var(--blue-dim);
+  box-shadow: var(--shadow-md);
 }
 
 .playAllBtn {
@@ -193,18 +207,21 @@
   font-family: var(--font-read);
   font-size: var(--text-sm);
   color: var(--ink-2);
-  background: var(--paper-s);
-  border: 1px solid var(--rule);
+  background: var(--glass-s);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   cursor: pointer;
-  min-height: 36px;
-  transition: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
+  min-height: var(--touch-min);
+  transition: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast), box-shadow var(--duration-fast);
 }
 
 .playAllBtn:hover {
-  background: var(--paper);
+  background: var(--glass);
   color: var(--blue);
-  border-color: var(--blue);
+  border-color: var(--blue-line);
+  box-shadow: var(--shadow-sm);
 }
 
 .compareActions {
@@ -221,11 +238,11 @@
 
   .letterBtn {
     font-size: var(--text-sm);
-    min-height: 40px;
+    min-height: var(--touch-min);
   }
 
   .diacriticsGrid {
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: var(--space-1);
   }
 

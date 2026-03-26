@@ -1,5 +1,5 @@
 /* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Atkinson+Hyperlegible:wght@400;700&family=DM+Mono:ital,wght@0,400;0,500&family=Dancing+Script:wght@400;700&family=Caveat:wght@400;700&family=Marck+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Atkinson+Hyperlegible:wght@400;700&family=DM+Mono:ital,wght@0,400;0,500&family=Source+Serif+4:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@400;700&family=Caveat:wght@400;700&family=Marck+Script&display=swap');
 
 /* Base */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -15,8 +15,10 @@ body {
   font-size: var(--text-base);
   line-height: var(--leading-base);
   color: var(--ink);
-  background: var(--paper);
-  transition: background var(--duration-base), color var(--duration-base);
+  background-color: var(--paper);
+  background-image: var(--mesh-bg);
+  background-attachment: fixed;
+  transition: background-color var(--duration-base), color var(--duration-base);
 }
 
 /* Logo / wordmark */
@@ -24,7 +26,10 @@ body {
   font-family: var(--font-ui);
   font-weight: 300;
   font-size: 18px;
-  color: var(--blue);
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   letter-spacing: 0.02em;
   text-transform: lowercase;
 }
