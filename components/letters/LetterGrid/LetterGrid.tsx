@@ -36,7 +36,7 @@ export function LetterGrid({ cells, onLetterClick }: LetterGridProps) {
         preserveAspectRatio="none"
         aria-hidden="true"
       >
-        <polygon points="0,36 140,0 280,36" fill="var(--paper-e)" />
+        <polygon points="0,36 140,0 280,36" style={{ fill: 'var(--blue-dim)' }} />
       </svg>
       <div className={styles.houseBody}>
         <div className={styles.grid} role="list" aria-label="Французский алфавит">

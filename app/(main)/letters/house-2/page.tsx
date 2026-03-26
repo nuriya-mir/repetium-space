@@ -64,7 +64,7 @@ export default function House2Page() {
     ctx.beginPath()
     ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top)
     ctx.strokeStyle = getComputedStyle(document.documentElement)
-      .getPropertyValue('--blue').trim() || '#3A6EA0'
+      .getPropertyValue('--blue').trim() || '#5A7A9E'
     ctx.lineWidth = 3
     ctx.lineCap   = 'round'
     ctx.lineJoin  = 'round'
@@ -108,7 +108,7 @@ export default function House2Page() {
             preserveAspectRatio="none"
             aria-hidden="true"
           >
-            <polygon points="0,36 140,0 280,36" fill="rgba(200,148,42,0.12)" />
+            <polygon points="0,36 140,0 280,36" style={{ fill: 'rgba(200,148,42,0.12)' }} />
           </svg>
           <div className={styles.houseBody}>
             <div className={styles.grid}>

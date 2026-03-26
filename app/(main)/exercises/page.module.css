@@ -18,10 +18,7 @@
   font-family: var(--font-ui);
   font-size: var(--text-xl);
   font-weight: 300;
-  background: var(--grad-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--blue);
   letter-spacing: var(--tracking-tight);
   margin-bottom: var(--space-2);
 }
@@ -48,26 +45,22 @@
 
 .card {
   padding: var(--space-3) var(--space-3);
-  background: var(--glass);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
+  background: var(--paper-s);
+  border: 1px solid var(--rule);
   border-radius: var(--radius-lg);
-  box-shadow: var(--glass-shadow);
   font-family: var(--font-ui);
   font-size: var(--text-sm);
   color: var(--ink);
   text-align: left;
   cursor: pointer;
-  transition: box-shadow var(--duration-fast), transform var(--duration-fast), border-color var(--duration-fast);
+  transition: border-color var(--duration-fast), background var(--duration-fast), transform var(--duration-fast);
   line-height: var(--leading-base);
 }
 
 .card:hover:not(.cardDim) {
-  background: var(--glass);
+  background: var(--blue-dim);
   border-color: var(--blue-line);
-  box-shadow: 0 6px 28px rgba(109, 40, 217, 0.14), 0 2px 6px rgba(109, 40, 217, 0.08);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .cardDim {
@@ -81,11 +74,9 @@
   color: var(--ink-3);
   line-height: var(--leading-base);
   padding: var(--space-4);
-  background: var(--glass-s);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
+  background: var(--paper-s);
+  border: 1px solid var(--rule-s);
+  border-radius: var(--radius-md);
 }
 
 /* Exercise view */

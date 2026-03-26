@@ -37,9 +37,9 @@ export function Letter3D({ letter, size = 200, interactive = true }: Letter3DPro
     if (!container) return
 
     const cs = getComputedStyle(document.documentElement)
-    const paperS = cs.getPropertyValue('--paper-s').trim() || '#EDEAE2'
-    const blueHex = cs.getPropertyValue('--blue').trim() || '#3A6EA0'
-    const ink3Hex = cs.getPropertyValue('--ink-3').trim() || '#8A8780'
+    const paperS = cs.getPropertyValue('--paper-s').trim() || '#EEEDEA'
+    const blueHex = cs.getPropertyValue('--blue').trim() || '#5A7A9E'
+    const ink3Hex = cs.getPropertyValue('--ink-3').trim() || '#8A8A92'
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false })
     renderer.setSize(size, size)

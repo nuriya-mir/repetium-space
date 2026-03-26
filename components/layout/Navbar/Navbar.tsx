@@ -1,16 +1,19 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Icon, IconName } from '@/components/ui/Icon'
 import { Logo } from '@/components/ui/Logo'
 import { useI18n, useT, LOCALES, LOCALE_LABELS } from '@/lib/i18n'
+import { SettingsPanel } from '@/components/ui/SettingsPanel/SettingsPanel'
 import styles from './Navbar.module.css'
 
 export function Navbar() {
   const pathname = usePathname()
   const t = useT()
   const { locale, setLocale } = useI18n()
+  const [settingsOpen, setSettingsOpen] = useState(false)
 
   const mainLinks: { href: string; label: string; icon: IconName }[] = [
     { href: '/home',      label: t.nav.home,      icon: 'home'      },
@@ -59,7 +62,12 @@ export function Navbar() {
             ))}
           </div>
 
-          <button className={styles.iconBtn} aria-label={t.nav.settings}>
+          <button
+            className={`${styles.iconBtn} ${settingsOpen ? styles.iconBtnActive : ''}`}
+            aria-label={t.nav.settings}
+            aria-expanded={settingsOpen}
+            onClick={() => setSettingsOpen(true)}
+          >
             <Icon name="settings" size={20} />
           </button>
           <button className={styles.iconBtn} aria-label={t.nav.profile}>
@@ -67,6 +75,25 @@ export function Navbar() {
           </button>
         </div>
       </nav>
+
+      {/* Mobile top bar */}
+      <div className={styles.mobileTopBar}>
+        <Link href="/" className={styles.mobileTopLogo} aria-label="Repetium — на главную">
+          <Logo markHeight={24} wordmarkSize={14} layout="horizontal" />
+        </Link>
+        <div className={styles.mobileTopLocale}>
+          {LOCALES.map((loc) => (
+            <button
+              key={loc}
+              className={`${styles.mobileLocaleBtn} ${locale === loc ? styles.mobileLocaleActive : ''}`}
+              onClick={() => setLocale(loc)}
+              aria-pressed={locale === loc}
+            >
+              {LOCALE_LABELS[loc]}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* Mobile bottom navbar */}
       <nav className={styles.mobileNav}>
@@ -81,6 +108,8 @@ export function Navbar() {
           </Link>
         ))}
       </nav>
+
+      <SettingsPanel isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </>
   )
 }

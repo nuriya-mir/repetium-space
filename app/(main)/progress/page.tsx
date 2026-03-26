@@ -4,13 +4,11 @@ import { useState } from 'react'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { ProgressBar } from '@/components/ui/ProgressBar'
-import { Toggle } from '@/components/ui/Toggle'
 import { useT } from '@/lib/i18n'
 import styles from './page.module.css'
 
-type Tab = 'progress' | 'test' | 'settings'
+type Tab = 'progress' | 'test'
 
-// Demo test questions
 const TEST_QUESTIONS = [
   { id: 1, type: 'letter-recognition', prompt: 'Какая это буква?', display: 'É', options: ['E', 'É', 'È', 'Ê'], correct: 'É' },
   { id: 2, type: 'sound-to-letter', prompt: 'Какая буква издаёт этот звук?', display: '[ʃ]', options: ['S', 'C', 'CH', 'J'], correct: 'CH' },
@@ -21,16 +19,12 @@ const TEST_QUESTIONS = [
 
 export default function ProgressPage() {
   const t = useT()
+
   const [tab, setTab] = useState<Tab>('progress')
   const [testStarted, setTestStarted] = useState(false)
   const [testIdx, setTestIdx] = useState(0)
   const [answers, setAnswers] = useState<Record<number, string>>({})
   const [testDone, setTestDone] = useState(false)
-
-  // Settings state
-  const [darkMode, setDarkMode] = useState(false)
-  const [dyslexiaMode, setDyslexiaMode] = useState(false)
-  const [soundEnabled, setSoundEnabled] = useState(true)
 
   function handleTestAnswer(answer: string) {
     setAnswers((prev) => ({ ...prev, [TEST_QUESTIONS[testIdx].id]: answer }))
@@ -41,29 +35,18 @@ export default function ProgressPage() {
     }
   }
 
-  function toggleTheme(dark: boolean) {
-    setDarkMode(dark)
-    document.body.classList.toggle('dark', dark)
-  }
-
-  function toggleDyslexia(on: boolean) {
-    setDyslexiaMode(on)
-    document.body.classList.toggle('dyslexia', on)
-  }
-
   return (
     <div className={styles.page}>
       <div className={styles.header}>
         <h1 className={styles.title}>
-          {tab === 'progress' ? t.progress.tabs.progress : tab === 'test' ? t.progress.tabs.test : t.progress.tabs.settings}
+          {tab === 'progress' ? t.progress.tabs.progress : t.progress.tabs.test}
         </h1>
       </div>
 
       <div className={styles.tabs}>
         {([
           { key: 'progress', label: t.progress.tabs.progress },
-          { key: 'test', label: t.progress.tabs.test },
-          { key: 'settings', label: t.progress.tabs.settings },
+          { key: 'test',     label: t.progress.tabs.test },
         ] as const).map((tab_) => (
           <button
             key={tab_.key}
@@ -75,7 +58,7 @@ export default function ProgressPage() {
         ))}
       </div>
 
-      {/* Progress tab */}
+      {/* ── Progress tab ── */}
       {tab === 'progress' && (
         <div className={styles.content}>
           <Card padding="md">
@@ -104,7 +87,7 @@ export default function ProgressPage() {
         </div>
       )}
 
-      {/* Test tab */}
+      {/* ── Test tab ── */}
       {tab === 'test' && (
         <div className={styles.content}>
           {!testStarted && !testDone && (
@@ -119,26 +102,13 @@ export default function ProgressPage() {
 
           {testStarted && !testDone && (
             <div className={styles.testQuestion}>
-              <ProgressBar
-                value={testIdx + 1}
-                max={TEST_QUESTIONS.length}
-                size="sm"
-                variant="default"
-              />
+              <ProgressBar value={testIdx + 1} max={TEST_QUESTIONS.length} size="sm" variant="default" />
               <div className={styles.questionCard}>
-                <p className={styles.questionPrompt}>
-                  {TEST_QUESTIONS[testIdx].prompt}
-                </p>
-                <span className={styles.questionDisplay}>
-                  {TEST_QUESTIONS[testIdx].display}
-                </span>
+                <p className={styles.questionPrompt}>{TEST_QUESTIONS[testIdx].prompt}</p>
+                <span className={styles.questionDisplay}>{TEST_QUESTIONS[testIdx].display}</span>
                 <div className={styles.optionsGrid}>
                   {TEST_QUESTIONS[testIdx].options.map((opt) => (
-                    <button
-                      key={opt}
-                      className={styles.optionBtn}
-                      onClick={() => handleTestAnswer(opt)}
-                    >
+                    <button key={opt} className={styles.optionBtn} onClick={() => handleTestAnswer(opt)}>
                       {opt}
                     </button>
                   ))}
@@ -168,25 +138,6 @@ export default function ProgressPage() {
         </div>
       )}
 
-      {/* Settings tab */}
-      {tab === 'settings' && (
-        <div className={styles.content}>
-          <Card padding="md">
-            <h3 className={styles.sectionLabel}>{t.progress.display}</h3>
-            <div className={styles.settingsList}>
-              <Toggle label={t.progress.darkMode} checked={darkMode} onChange={toggleTheme} />
-              <Toggle label={t.progress.dyslexiaMode} checked={dyslexiaMode} onChange={toggleDyslexia} />
-            </div>
-          </Card>
-
-          <Card padding="md">
-            <h3 className={styles.sectionLabel}>{t.progress.sound}</h3>
-            <div className={styles.settingsList}>
-              <Toggle label={t.progress.soundEnabled} checked={soundEnabled} onChange={setSoundEnabled} />
-            </div>
-          </Card>
-        </div>
-      )}
     </div>
   )
 }

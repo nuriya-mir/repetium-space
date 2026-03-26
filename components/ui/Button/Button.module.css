@@ -7,7 +7,7 @@
   font-weight: 400;
   letter-spacing: 0.01em;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: 8px;
   cursor: pointer;
   transition:
     background 0.18s var(--ease-out),
@@ -38,48 +38,46 @@
   min-height: 32px;
   padding: 7px 16px;
   font-size: 12px;
-  border-radius: var(--radius-sm);
+  border-radius: 6px;
 }
 
 .md {
-  min-height: var(--touch-min);
+  min-height: 40px;
   padding: 10px 22px;
   font-size: 14px;
-  border-radius: var(--radius-md);
+  border-radius: 8px;
 }
 
 .lg {
   min-height: 48px;
   padding: 13px 30px;
   font-size: 16px;
-  border-radius: var(--radius-lg);
+  border-radius: 10px;
 }
 
-/* Primary — gradient */
+/* Primary */
 .primary {
   background: var(--grad-primary);
-  color: #fff;
-  box-shadow: 0 2px 12px rgba(109, 40, 217, 0.30), 0 1px 2px rgba(109, 40, 217, 0.14);
+  color: #F4F1EB;
+  box-shadow: 0 1px 3px rgba(58, 110, 160, 0.24), 0 1px 1px rgba(58, 110, 160, 0.12);
 }
 
 .primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #5B21B6 0%, #9333EA 100%);
-  box-shadow: 0 4px 20px rgba(109, 40, 217, 0.42), 0 1px 3px rgba(109, 40, 217, 0.18);
+  background: var(--grad-secondary);
+  box-shadow: 0 3px 12px rgba(58, 110, 160, 0.34), 0 1px 3px rgba(58, 110, 160, 0.18);
   transform: translateY(-1px);
 }
 
 .primary:active:not(:disabled) {
-  box-shadow: 0 1px 4px rgba(109, 40, 217, 0.14);
+  box-shadow: 0 0px 1px rgba(58, 110, 160, 0.12);
 }
 
 /* Secondary */
 .secondary {
-  background: var(--glass);
+  background: var(--paper-s);
   color: var(--ink);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--rule);
   box-shadow: var(--shadow-btn);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 
 .secondary:hover:not(:disabled) {
@@ -95,7 +93,7 @@
 }
 
 .secondary:disabled {
-  background: var(--glass-s);
+  background: var(--paper-s);
   color: var(--ink-3);
   border-color: var(--rule-s);
   box-shadow: none;
@@ -143,7 +141,7 @@
 }
 
 .fb-ok:hover:not(:disabled) {
-  background: rgba(109, 40, 217, 0.16);
+  background: rgba(58, 110, 160, 0.20);
   transform: translateY(-1px);
   box-shadow: var(--shadow-btn-hover);
 }
@@ -161,7 +159,7 @@
 }
 
 .fb-try:hover:not(:disabled) {
-  background: rgba(180, 83, 9, 0.18);
+  background: rgba(180, 140, 80, 0.20);
   transform: translateY(-1px);
   box-shadow: var(--shadow-btn-hover);
 }
@@ -179,7 +177,7 @@
 }
 
 .fb-done:hover:not(:disabled) {
-  background: rgba(4, 120, 87, 0.18);
+  background: rgba(100, 160, 80, 0.20);
   transform: translateY(-1px);
   box-shadow: var(--shadow-btn-hover);
 }
@@ -227,22 +225,20 @@
 
 /* Icon button */
 .icon {
-  background: var(--glass-s);
+  background: transparent;
   color: var(--ink-2);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  width: var(--touch-min);
-  height: var(--touch-min);
-  min-height: var(--touch-min);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
   padding: 0;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 
 .icon:hover:not(:disabled) {
   background: var(--blue-dim);
   border-color: var(--blue-line);
-  color: var(--blue);
+  color: var(--ink);
   transform: translateY(-1px);
   box-shadow: var(--shadow-btn-hover);
 }
@@ -279,13 +275,6 @@
 
 .hiddenText {
   visibility: hidden;
-}
-
-/* Mobile: ensure .sm meets touch target */
-@media (max-width: 640px) {
-  .sm {
-    min-height: var(--touch-min);
-  }
 }
 
 @keyframes spin {

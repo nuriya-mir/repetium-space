@@ -99,7 +99,7 @@ export default function House3Page() {
           preserveAspectRatio="none"
           aria-hidden="true"
         >
-          <polygon points="0,36 140,0 280,36" fill="var(--teal-dim)" />
+          <polygon points="0,36 140,0 280,36" style={{ fill: 'var(--teal-dim)' }} />
         </svg>
         <div className={styles.houseBody}>
           <div className={styles.soundGrid} role="list" aria-label={t.letters.house3.title}>
