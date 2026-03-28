@@ -1,8 +1,24 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { createHash } from 'crypto'
+import { readFileSync } from 'fs'
+import { join } from 'path'
 import { NextRequest, NextResponse } from 'next/server'
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+// Claude Code sets empty ANTHROPIC_* shell env vars that override .env.local.
+// Fall back to reading .env.local directly when the shell var is empty.
+function resolveApiKey(): string | undefined {
+  const fromEnv = process.env.ANTHROPIC_API_KEY
+  if (fromEnv) return fromEnv
+  try {
+    const raw = readFileSync(join(process.cwd(), '.env.local'), 'utf8')
+    const match = raw.match(/^ANTHROPIC_API_KEY=(.+)$/m)
+    return match?.[1]?.trim() || undefined
+  } catch {
+    return undefined
+  }
+}
+
+const anthropic = new Anthropic({ apiKey: resolveApiKey(), authToken: null })
 
 export async function POST(req: NextRequest) {
   const { group_id, letter_targets, format = 'normal', difficulty_step = 1 } = await req.json()
@@ -28,14 +44,19 @@ export async function POST(req: NextRequest) {
   const target = (group_id === 'g4' || group_id === 'g7' || group_id === 'g8' || group_id === 'g10' || group_id === 'g16') ? letter_targets.join('|') : (letter_targets[0] ?? '')
   const { system, user } = buildPrompt(group_id, target)
 
-  const response = await anthropic.messages.create({
-    model: 'claude-haiku-4-5-20251001',
-    max_tokens: 2048,
-    system,
-    messages: [{ role: 'user', content: user }],
-  })
-
-  let content = (response.content.find(b => b.type === 'text')?.text ?? '').trim().replace(/^#+\s*/gm, '')
+  let content: string
+  try {
+    const response = await anthropic.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 2048,
+      system,
+      messages: [{ role: 'user', content: user }],
+    })
+    content = (response.content.find(b => b.type === 'text')?.text ?? '').trim().replace(/^#+\s*/gm, '')
+  } catch (err) {
+    console.error('[generate-text] Anthropic error:', err)
+    return NextResponse.json({ error: String(err) }, { status: 502 })
+  }
 
   // G4, G6, G7, G10, G13, G14, G16, G19, G20 have no occurrence/position constraints — text is used as-is
   if (group_id !== 'g4' && group_id !== 'g6' && group_id !== 'g7' && group_id !== 'g8' && group_id !== 'g9' && group_id !== 'g10' && group_id !== 'g13' && group_id !== 'g14' && group_id !== 'g16' && group_id !== 'g19' && group_id !== 'g20') {
@@ -54,17 +75,21 @@ export async function POST(req: NextRequest) {
     // Fallback: one fresh retry if constraints not satisfied
     const problems = checkText(content)
     if (problems.length > 0) {
-      const retry = await anthropic.messages.create({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 2048,
-        system,
-        messages: [{
-          role: 'user',
-          content: user + `\n\nATTENTION CRITIQUE: La tentative précédente a échoué (${problems.join('; ')}). Commence par lister 20 mots contenant «${target}» dans la bonne position, puis construis le texte autour de ces mots.`,
-        }],
-      })
-      const fixed = retry.content.find(b => b.type === 'text')?.text.trim()
-      if (fixed) content = fixed
+      try {
+        const retry = await anthropic.messages.create({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 2048,
+          system,
+          messages: [{
+            role: 'user',
+            content: user + `\n\nATTENTION CRITIQUE: La tentative précédente a échoué (${problems.join('; ')}). Commence par lister 20 mots contenant «${target}» dans la bonne position, puis construis le texte autour de ces mots.`,
+          }],
+        })
+        const fixed = retry.content.find(b => b.type === 'text')?.text.trim()
+        if (fixed) content = fixed
+      } catch {
+        // Use first attempt
+      }
     }
   }
 

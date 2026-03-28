@@ -1,6 +1,4 @@
-// Repetium Logo v1 · Variant A · "Triple trace"
-// Mark: geometric lowercase r, drawn three times —
-// two ghost layers (10% / 28%) + one solid layer (100%).
+// Repetium Logo · Mark: geometric lowercase r, single stroke.
 // Wordmark: Outfit 300, color var(--blue), ".space" at opacity 0.60.
 
 import styles from './Logo.module.css'
@@ -36,8 +34,6 @@ export function Logo({
       fill="none"
       aria-hidden="true"
     >
-      <path d={MARK_PATH} stroke="currentColor" strokeWidth="2"   strokeLinecap="round" opacity="0.10" />
-      <path d={MARK_PATH} stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" opacity="0.28" />
       <path d={MARK_PATH} stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" />
     </svg>
   )
