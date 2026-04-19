@@ -449,8 +449,7 @@
   padding: var(--space-6);
 }
 
-.scienceEmoji {
-  font-size: 28px;
+.scienceIcon {
   display: block;
   margin-bottom: var(--space-3);
 }

@@ -235,17 +235,39 @@ export default function LandingPage() {
           <h2 className={styles.sectionTitle}>{t.landing.science.title}</h2>
           <div className={styles.scienceGrid}>
             <div className={styles.scienceItem}>
-              <div className={styles.scienceEmoji} aria-hidden="true">🧬</div>
+              <div className={styles.scienceIcon} aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="4.5" r="1.5" stroke="var(--blue)" strokeWidth="1.5" />
+                  <circle cx="5" cy="17.5" r="1.5" stroke="var(--blue)" strokeWidth="1.5" />
+                  <circle cx="19" cy="17.5" r="1.5" stroke="var(--blue)" strokeWidth="1.5" />
+                  <path d="M12 6L6 16" stroke="var(--blue)" strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M12 6L18 16" stroke="var(--blue)" strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M6.5 17.5H17.5" stroke="var(--blue)" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </div>
               <h3 className={styles.scienceLabel}>{t.landing.science.h1label}</h3>
               <p className={styles.scienceDesc}>{t.landing.science.h1desc}</p>
             </div>
             <div className={styles.scienceItem}>
-              <div className={styles.scienceEmoji} aria-hidden="true">🔑</div>
+              <div className={styles.scienceIcon} aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 18L10 6L14 18" stroke="var(--blue)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M7.5 14h5" stroke="var(--blue)" strokeWidth="1.5" strokeLinecap="round" />
+                  <circle cx="19" cy="9" r="1.5" stroke="var(--blue)" strokeWidth="1.5" />
+                  <path d="M19 11v5" stroke="var(--blue)" strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M17 14h4" stroke="var(--blue)" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </div>
               <h3 className={styles.scienceLabel}>{t.landing.science.d1label}</h3>
               <p className={styles.scienceDesc}>{t.landing.science.d1desc}</p>
             </div>
             <div className={styles.scienceItem}>
-              <div className={styles.scienceEmoji} aria-hidden="true">👁️</div>
+              <div className={styles.scienceIcon} aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                  <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" stroke="var(--blue)" strokeWidth="1.5" />
+                  <circle cx="12" cy="12" r="2.5" stroke="var(--blue)" strokeWidth="1.5" />
+                </svg>
+              </div>
               <h3 className={styles.scienceLabel}>{t.landing.science.ms1label}</h3>
               <p className={styles.scienceDesc}>{t.landing.science.ms1desc}</p>
             </div>
