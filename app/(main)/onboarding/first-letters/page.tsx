@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { DEFAULT_FIRST_LETTERS, updateFirstVisitState, useFirstVisitState } from '@/lib/first-visit/state'
-import { createClient } from '@/lib/supabase/client'
 import { useT } from '@/lib/i18n'
 import styles from './page.module.css'
 
@@ -13,13 +12,6 @@ export default function FirstLettersPage() {
   const t = useT()
   const { state, ready } = useFirstVisitState()
   const [audioError, setAudioError] = useState(false)
-
-  useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getUser().then(({ data }) => {
-      if (!data.user) router.replace('/login?next=%2Fonboarding%2Ffirst-letters')
-    })
-  }, [router])
 
   useEffect(() => {
     if (!ready) return
@@ -57,14 +49,26 @@ export default function FirstLettersPage() {
       const response = await fetch('/api/tts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: letter }),
+        body: JSON.stringify({ text: letter.toLowerCase() }),
       })
       if (!response.ok) throw new Error('tts unavailable')
       const data: { url?: string } = await response.json()
       if (!data.url) throw new Error('tts unavailable')
       await new Audio(data.url).play()
     } catch {
-      setAudioError(true)
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel()
+        const utter = new SpeechSynthesisUtterance(letter.toLowerCase())
+        utter.lang = 'fr-FR'
+        const frVoice = window.speechSynthesis
+          .getVoices()
+          .find((v) => v.lang === 'fr-FR' || v.lang === 'fr_FR' || v.lang.startsWith('fr'))
+        if (frVoice) utter.voice = frVoice
+        utter.rate = 0.85
+        window.speechSynthesis.speak(utter)
+      } else {
+        setAudioError(true)
+      }
     }
   }
 

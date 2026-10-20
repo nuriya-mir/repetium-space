@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { FirstVisitShell } from '@/components/first-visit/FirstVisitShell'
 import { updateFirstVisitState, useFirstVisitState } from '@/lib/first-visit/state'
-import { createClient } from '@/lib/supabase/client'
 import { useT } from '@/lib/i18n'
 import styles from './page.module.css'
 
@@ -14,7 +13,6 @@ export default function OnboardingTourPage() {
   const router = useRouter()
   const t = useT()
   const { state, ready } = useFirstVisitState()
-  const [checkingAuth, setCheckingAuth] = useState(true)
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
@@ -22,25 +20,15 @@ export default function OnboardingTourPage() {
   }, [ready, state])
 
   useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getUser().then(({ data }) => {
-      if (!data.user) {
-        router.replace('/login?next=%2Fonboarding%2Ftour')
-        return
-      }
-
-      updateFirstVisitState((current) => ({
-        ...current,
-        attachedUserId: data.user.id,
-        stage: 'tour',
-        onboarding: {
-          ...current.onboarding,
-          tourStatus: 'in_progress',
-        },
-      }))
-      setCheckingAuth(false)
-    })
-  }, [router])
+    updateFirstVisitState((current) => ({
+      ...current,
+      stage: 'tour',
+      onboarding: {
+        ...current.onboarding,
+        tourStatus: 'in_progress',
+      },
+    }))
+  }, [])
 
   function saveIndex(nextIndex: number) {
     setIndex(nextIndex)
@@ -58,22 +46,14 @@ export default function OnboardingTourPage() {
   function completeTour(status: 'completed' | 'skipped') {
     updateFirstVisitState((current) => ({
       ...current,
-      stage: 'dashboard',
+      stage: 'first_letters',
       onboarding: {
         ...current.onboarding,
         tourStatus: status,
         tourIndex: index,
       },
     }))
-    router.push('/home?first=1')
-  }
-
-  if (checkingAuth) {
-    return (
-      <FirstVisitShell exitHref="/home">
-        <p className={styles.loading} aria-live="polite">{t.firstVisit.tour.loading}</p>
-      </FirstVisitShell>
-    )
+    router.push(status === 'completed' ? '/onboarding/first-letters' : '/home?first=1')
   }
 
   const slide = t.firstVisit.tour.slides[index]

@@ -54,8 +54,9 @@ export async function POST(req: NextRequest) {
     })
     content = (response.content.find(b => b.type === 'text')?.text ?? '').trim().replace(/^#+\s*/gm, '')
   } catch (err) {
-    console.error('[generate-text] Anthropic error:', err)
-    return NextResponse.json({ error: String(err) }, { status: 502 })
+    console.warn('[generate-text] Using local French fallback corpus:', err)
+    content = getFallbackText(group_id, Array.isArray(letter_targets) ? letter_targets : [String(letter_targets ?? '')])
+    return NextResponse.json({ content, cache_key, group_id, letter_targets, source: 'local_fallback' })
   }
 
   // G4, G5, G6, G7, G10, G13, G14, G16, G19, G20 have no occurrence/position constraints — text is used as-is
@@ -324,4 +325,70 @@ Règles:
 Thème (choisir un): la nature, le café parisien, une promenade, la lumière du matin, les livres, la musique douce.`
 
   return { system, user }
+}
+
+function getFallbackText(group_id: string, letter_targets: string[]): string {
+  const first = (letter_targets[0] ?? 'a').toLowerCase()
+
+  if (group_id === 'g9') {
+    const pairs: Record<string, string> = {
+      d: 'grand / grande\nchaud / chaude\nfroid / froide\nblond / blonde\ngourmand / gourmande\nlourd / lourde\nprofond / profonde\nsecond / seconde',
+      t: 'petit / petite\nfort / forte\nhaut / haute\ncourt / courte\nlent / lente\nvert / verte\nouvert / ouverte\ncontent / contente',
+      s: 'gris / grise\ngros / grosse\nbas / basse\nmauvais / mauvaise\nprécis / précise\nfrançais / française\népais / épaisse\ndivers / diverse',
+      x: 'heureux / heureuse\ndoux / douce\nfaux / fausse\njaloux / jalouse\nroux / rousse\ncurieux / curieuse\nsérieux / sérieuse\nprécieux / précieuse',
+      p: 'loup / louve\ndrap / draper\nsirop / siroter\ngalop / galoper\ncoup / couper\ncamp / camper\nchamp / champêtre\nbeaucoup / découper',
+      n: 'bon / bonne\nbrun / brune\nfin / fine\nvoisin / voisine\ncertain / certaine\nancien / ancienne\nplein / pleine\nhumain / humaine',
+    }
+    return pairs[first] ?? pairs['d']
+  }
+
+  if (group_id === 'g13') {
+    const parts = first.split(',')
+    const sylls = parseInt(parts[1]) || 2
+    if (sylls === 2) {
+      return 'café = ca-fé\nmaison = mai-son\njardin = jar-din\nsoleil = so-leil\nmatin = ma-tin\nchâteau = châ-teau\nbonheur = bon-heur\nmusique = mu-sique\nchemin = che-min\noiseau = oi-seau\nfenêtre = fe-nêtre\nimage = i-mage\nparfum = par-fum\nsaison = sai-son\nrivière = ri-vière'
+    }
+    if (sylls === 3) {
+      return 'chocolat = cho-co-lat\npapillon = pa-pi-llon\npromenade = pro-me-nade\nhabitude = ha-bi-tude\nliberté = li-ber-té\nmélodie = mé-lo-die\nsouvenir = sou-ve-nir\nhorizon = ho-ri-zon\nvérité = vé-ri-té\nsolution = so-lu-tion\npoésie = po-é-sie\nqualité = qua-li-té'
+    }
+    return 'information = in-for-ma-tion\nimagination = i-ma-gi-na-tion\ntranquillement = tran-quil-le-ment\nconversation = con-ver-sa-tion\narchitecture = ar-chi-tec-ture\nbibliothèque = bi-bli-o-thèque\nsérénité = sé-ré-ni-té\ndélicatement = dé-li-ca-te-ment\nnaturellement = na-tu-rel-le-ment\npaisiblement = pai-si-ble-ment'
+  }
+
+  if (group_id === 'g14') {
+    return 'tourain\nmondel\nchaviton\nbresseau\nplondier\ngauvette\nfrouvent\nchalire\nmonteux\nclariel\nverdain\nsorneau\nbrantille\nlouvenet\npradoul\nmiravel\ncorneau\nfleurain\nvalmont\nchanteau'
+  }
+
+  if (group_id === 'g4') {
+    return 'Le matin, dans le grand jardin, un enfant écoute une chanson douce devant la maison. Le vent du printemps souffle lentement sur le chemin blanc. Chacun prend son temps avec un bon pain chaud et regarde au loin le moulin ancien. Ce moment calme donne un sentiment profond et serein.'
+  }
+
+  if (group_id === 'g5') {
+    return 'Dès l’été, Élodie prépare du thé léger près de la fenêtre éclairée. Sa mère écoute une mélodie très douce sous le chêne. À côté du château, la rivière fraîche reflète la lumière dorée. Chaque soirée apporte une sérénité agréable et une belle leçon de calme.'
+  }
+
+  if (group_id === 'g6') {
+    return 'Chaque matin, Camille commence sa promenade avec calme et courage. Sous le ciel clair, elle regarde le grand jardin et la façade ancienne. Les roses du salon et la musique douce accompagnent ce moment simple. L’histoire de cet endroit heureux inspire un exercice exact et paisible.'
+  }
+
+  if (group_id === 'g7' || group_id === 'g8') {
+    return 'Dans le petit jardin, le chat dort sous le grand arbre pendant que la pluie douce tombe sur la rue. Toujours calme, l’homme ouvre son cahier à l’heure tranquille du matin. Il écoute la musique de la guitare et regarde la montagne magnifique avec beaucoup de bonheur et de paix.'
+  }
+
+  if (group_id === 'g10') {
+    return 'Avec patience et confiance, chaque création demande une attention calme. On avance doucement et tranquillement dans ce beau paysage de village. Le bonheur et la douceur de la lumière donnent un espoir agréable. C’est un moment merveilleux et paisible devant la fenêtre ouverte.'
+  }
+
+  if (group_id === 'g11') {
+    return 'Chaque matin, on peut regarder la lumière, retrouver son calme et reprendre la lecture. Il est agréable de découvrir une histoire, de préparer son cahier et de parcourir les lignes. On commence par observer les mots, puis on continue à avancer et à comprendre le texte tranquillement.'
+  }
+
+  if (group_id === 'g16') {
+    return 'Camille marche dans le jardin et pose son livre sur la table en bois. Le chat se repose sous les arbres avec douceur. Elle prépare du thé pour la matinée et regarde vers la colline sans hâte. Plus tard, elle passe chez le libraire dans la rue calme avec le sourire.'
+  }
+
+  if (group_id === 'g19' || group_id === 'g20') {
+    return 'Le matin, la lumière douce entre par la grande fenêtre du salon, et Camille ouvre son livre sur la table en bois. Dehors, le vent léger fait danser les feuilles vertes dans le jardin silencieux. Elle lit quelques phrases avec calme, écoute le chant des oiseaux, puis savoure son café chaud avant de commencer sa journée tranquillement.'
+  }
+
+  return `Le matin, la lumière douce éclaire le jardin paisible et la grande maison. Nous observons l’élément « ${first} » avec calme et attention : ${first}, ${first}, ${first}, ${first}, ${first}, ${first}, ${first}, ${first}, ${first}, ${first}, ${first}, ${first}. Chaque répétition de « ${first} » aide à reconnaître cette forme tranquillement.`
 }

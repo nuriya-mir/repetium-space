@@ -22,7 +22,7 @@ function LoginForm() {
 
   useEffect(() => {
     const supabase = createClient()
-    supabase.auth.getUser().then(({ data }) => {
+    supabase.auth.getUser().then(({ data }: { data: { user: unknown } }) => {
       if (data.user) router.replace(next)
     })
   }, [next, router])
@@ -44,6 +44,10 @@ function LoginForm() {
     })
 
     if (authError) {
+      if (authError.message === 'local_mode') {
+        router.push(next)
+        return
+      }
       setError(t.firstVisit.auth.error)
       setLoading(false)
       return

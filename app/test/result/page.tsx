@@ -1,26 +1,17 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { FirstVisitShell } from '@/components/first-visit/FirstVisitShell'
-import { createClient } from '@/lib/supabase/client'
 import { updateFirstVisitState, useFirstVisitState } from '@/lib/first-visit/state'
 import { useT } from '@/lib/i18n'
 import styles from '../test.module.css'
-
-const LOGIN_DESTINATION = '/login?next=%2Fonboarding%2Ftour%3Fsource%3Dtest&source=test'
 
 export default function TestResultPage() {
   const router = useRouter()
   const t = useT()
   const { state, ready } = useFirstVisitState()
-  const [authenticated, setAuthenticated] = useState(false)
-
-  useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getUser().then(({ data }) => setAuthenticated(Boolean(data.user)))
-  }, [])
 
   useEffect(() => {
     if (ready && (!state || state.test.status !== 'completed' || !state.test.result)) {
@@ -35,13 +26,14 @@ export default function TestResultPage() {
   const result = state.test.result
   const recommendation = t.firstVisit.result.recommendations[result.recommendation]
 
-  function prepareRegistration() {
-    updateFirstVisitState((current) => ({ ...current, stage: 'auth_pending' }))
-  }
-
   function continueToTour() {
     updateFirstVisitState((current) => ({ ...current, stage: 'tour' }))
     router.push('/onboarding/tour?source=test')
+  }
+
+  function goStraightToHome() {
+    updateFirstVisitState((current) => ({ ...current, stage: 'dashboard' }))
+    router.push('/home?first=1')
   }
 
   return (
@@ -77,15 +69,12 @@ export default function TestResultPage() {
         <p className={styles.savedNotice}>{t.firstVisit.result.saved}</p>
 
         <div className={styles.actions}>
-          {authenticated ? (
-            <button type="button" className={styles.primary} onClick={continueToTour}>
-              {t.firstVisit.result.continue}
-            </button>
-          ) : (
-            <Link href={LOGIN_DESTINATION} className={styles.primary} onClick={prepareRegistration}>
-              {t.firstVisit.result.register}
-            </Link>
-          )}
+          <button type="button" className={styles.primary} onClick={continueToTour}>
+            {t.firstVisit.result.continue}
+          </button>
+          <button type="button" className={styles.textAction} onClick={goStraightToHome}>
+            {t.landing.try}
+          </button>
           <Link href="/" className={styles.textAction}>{t.firstVisit.result.later}</Link>
         </div>
       </section>
