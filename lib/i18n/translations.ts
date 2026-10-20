@@ -26,12 +26,12 @@ const ru = {
   // ── Landing page ────────────────────────────────────────────
   landing: {
     login: 'Войти',
-    try: 'Попробовать бесплатно',
+    try: 'Начать практику',
     hero: {
       overline: 'Настройка восприятия для французского языка',
       headline: 'Настрой мозг\nна французский',
       sub: 'Пространство, где мозг открывается французскому. Автоматизация восприятия букв через структурированное повторение — в своём темпе, без давления.',
-      cta: 'Попробовать бесплатно →',
+      cta: 'Начать практику →',
       note: 'Без регистрации · ~15 минут · Результат сразу',
       videoCaption: 'Как работает Repetium — за 2 минуты',
     },
@@ -55,7 +55,7 @@ const ru = {
       overline: 'Как это работает',
       title: 'Четыре шага',
       s1title: 'Тест',
-      s1desc: 'Бесплатно, без регистрации. ~15 минут. Результат сразу — понимаете, где барьер и что с ним делать.',
+      s1desc: 'Без регистрации. ~15 минут. Результат сразу — понимаете, где барьер и что с ним делать.',
       s2title: 'Знакомство с буквами',
       s2desc: 'Буквы, звуки, формы. Смотрите, слышите, рисуете. Каждый символ через несколько каналов восприятия одновременно.',
       s3title: 'Упражнения',
@@ -97,7 +97,7 @@ const ru = {
     },
     cta: {
       title: 'Ты не неспособный.\nПросто стандартные методы не подходили твоему восприятию.',
-      btn: 'Пройти бесплатный тест →',
+      btn: 'Начать знакомство →',
       note: 'Без регистрации · ~15 минут · Результат сразу',
     },
     footer: {
@@ -105,7 +105,7 @@ const ru = {
       login: 'Войти',
       test: 'Тест',
     },
-    sticky: 'Попробовать бесплатно',
+    sticky: 'Начать практику',
   },
 
   // ── Home dashboard ───────────────────────────────────────────
@@ -566,12 +566,12 @@ const en = {
 
   landing: {
     login: 'Log in',
-    try: 'Try for free',
+    try: 'Start practice',
     hero: {
       overline: 'Perception training for French',
       headline: 'Tune your brain\nto French',
       sub: 'A space where your brain opens up to French. Automate letter perception through structured repetition — at your pace, without pressure.',
-      cta: 'Try for free →',
+      cta: 'Start practice →',
       note: 'No sign-up · ~15 min · Results right away',
       videoCaption: 'How Repetium works — in 2 minutes',
     },
@@ -595,7 +595,7 @@ const en = {
       overline: 'How it works',
       title: 'Four steps',
       s1title: 'Test',
-      s1desc: 'Free, no registration. ~15 minutes. Instant results — understand where the barrier is and what to do about it.',
+      s1desc: 'No registration. ~15 minutes. Instant results — understand where the barrier is and what to do about it.',
       s2title: 'Meet the letters',
       s2desc: 'Letters, sounds, shapes. Look, listen, draw. Each symbol through multiple perception channels at once.',
       s3title: 'Exercises',
@@ -637,7 +637,7 @@ const en = {
     },
     cta: {
       title: 'You\'re not incapable.\nStandard methods just didn\'t match your perception.',
-      btn: 'Take the free test →',
+      btn: 'Start check-in →',
       note: 'No sign-up · ~15 min · Results right away',
     },
     footer: {
@@ -645,7 +645,7 @@ const en = {
       login: 'Log in',
       test: 'Test',
     },
-    sticky: 'Try for free',
+    sticky: 'Start practice',
   },
 
   home: {

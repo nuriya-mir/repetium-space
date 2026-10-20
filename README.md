@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Repetium — Open Web Environment for Calm Adult Grapheme-Phoneme Practice & Cognitive Accessibility
 
-## Getting Started
+**Live Web Prototype:** [https://repetiumspace.vercel.app](https://repetiumspace.vercel.app)  
+**Author:** Nuriya Mirsalimova (Almaty, Kazakhstan)  
+**Code License:** [MIT](./LICENSE) (OSI-approved Free & Open Source Software)  
+**Service Model:** Non-profit public good — free of charge for learners, no paywalls, no subscriptions
 
-First, run the development server:
+---
+
+## 1. Overview (English)
+
+**Repetium** is an open-source, local-first web environment designed for calm adult practice of French letters, letter combinations, diacritics, and sounds (`grapheme ↔ phoneme`), built from the ground up with cognitive accessibility and neurodivergent-friendly UX principles.
+
+Standard language apps assume effortless visual decoding and rely on timers, red error screens, streak pressure, and competitive leaderboards. For many adults — especially learners experiencing dyslexia, visual crowding, or sensory fatigue — opaque orthographies like French (`eau`, `aient`, `-ent`, silent endings, diacritics `é / è / ê / ë / ç`) cause immediate cognitive overload long before grammar or vocabulary can even begin.
+
+Repetium provides a non-evaluative, calm pre-course perception environment (*"Repetitio est mater studiorum"*):
+- **No timers, no red error screens, no public scores, no streak penalties, and no medical/diagnostic labels.**
+- **Free and open access:** Repetium is developed as an open public good without paywalls or subscriptions.
+
+### What Is Currently Implemented in This Repository
+
+1. **Three Interactive Letter & Sound Spaces (`app/(main)/letters/` & `components/letters/`):**
+   - **House 1 (`house-1`) — Reference French Alphabet:** All 26 letters and diacritic variants (`DiacriticPopover`, `Letter3D`, `LetterGrid`) with 9 interactive perception activities (`CompareActivity`, `NeighborsActivity`, `BetweenActivity`, `AlphabetActivity`, `CloseLettersActivity`, `WhereIsActivity`, `GuessActivity`, `BuildActivity`).
+   - **House 2 (`house-2`) — My Alphabet:** Multisensory drawing canvas (`upperPrint`, `lowerPrint`, `upperCursive`, `lowerCursive`, contour tracing and freehand modes) for building personal visual-motor letter memory.
+   - **House 3 (`house-3`) — Sound Reference:** Phoneme-to-grapheme mapping across French vowels, nasals, and consonants.
+2. **20 Grapheme-Phoneme Exercise Groups (`app/(main)/exercises/g1` – `g20`):**
+   - Structured progression from single letters and letter pairs (`G1–G2`), vowels and nasal combinations (`G3–G4`), contextual readings (`G6`), silent final and internal letters (`G7–G9`), word endings and prefixes (`G10–G11`), syllable division and pseudoword decoding (`G13–G14`), prepositions (`G16`), visual word-length perception (`G19`), to semantic reading blocks (`G20`).
+3. **Cognitive Accessibility & Sensory Controls (`components/ui/SettingsPanel/`, `lib/hooks/usePreferences.ts`):**
+   - Local-first preferences persisted in `localStorage` (`repetium_prefs`): dyslexia-friendly typography (`Lexend`), light/dark calm themes, audio playback speed (`0.75x / 1.0x / 1.25x`), and optional non-evaluative microphone toggle with full non-microphone fallback.
+   - Calm pause screen (`components/PauseScreen/`) available at any moment without losing progress.
+
+### Open-Source Roadmap
+
+- **Structured Open French Grapheme-Phoneme Dataset:** Extracting and publishing the complete French Reading Map (grapheme-phoneme units, contextual reading rules, diacritics, silent letters, and verified fallback word sets) as a standalone open JSON/TypeScript dataset (`CC BY-SA 4.0` / `CC0`).
+- **7-Step Unified Exercise Runtime & Accessible Fallbacks:** Completing the unified state machine (`choice → setup → observation → action → support → check → completion`) with manual 3-phase visual fade (`show → dots → blank`) and strict non-audio / non-microphone / keyboard-only fallbacks across all exercise mechanics.
+- **Standalone Offline-First Local Mode:** Ensuring 100% of core grapheme-phoneme practice, drawing history, and session state work locally in the browser (`IndexedDB` / `localStorage`) with zero mandatory cloud dependencies.
+
+---
+
+## 2. О проекте (Русский)
+
+**Repetium** — открытая некоммерческая веб-среда для спокойной настройки восприятия французских букв, буквосочетаний, диакритики и звуков (`графема ↔ фонема`) для взрослых, спроектированная с бережным отношением к нейроразнообразию и когнитивной нагрузке.
+
+- **Без оценочного давления:** никаких таймеров, красных экранов ошибки, рейтингов, штрафов за паузу и псевдодиагностических ярлыков.
+- **Полностью открытый и бесплатный доступ:** проект развивается как открытое общественное благо под лицензией `MIT` (без платных подписок и без paywall).
+
+---
+
+## 3. Running Locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
