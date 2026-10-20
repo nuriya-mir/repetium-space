@@ -15,8 +15,8 @@ body {
   font-size: var(--text-base);
   line-height: var(--leading-base);
   color: var(--ink);
-  background-color: var(--paper);
-  background-image: var(--mesh-bg);
+  background-color: var(--app-page);
+  background-image: none;
   background-attachment: fixed;
   transition: background-color var(--duration-base), color var(--duration-base);
 }

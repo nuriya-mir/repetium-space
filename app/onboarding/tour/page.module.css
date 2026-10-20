@@ -1,0 +1,147 @@
+.tour {
+  width: 100%;
+  max-width: var(--content-narrow);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.loading {
+  color: var(--ink-3);
+  text-align: center;
+}
+
+.label,
+.step {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.visual {
+  width: calc(var(--space-16) + var(--space-8));
+  height: calc(var(--space-16) + var(--space-8));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: var(--space-8) auto var(--space-5);
+  border: thin solid var(--blue-line);
+  border-radius: var(--radius-full);
+  background: var(--blue-dim);
+  color: var(--blue);
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+}
+
+.step {
+  margin-bottom: var(--space-3);
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: var(--text-2xl);
+  font-weight: 300;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink);
+  margin-bottom: var(--space-4);
+}
+
+.text {
+  min-height: calc(var(--space-16) + var(--space-4));
+  color: var(--ink-2);
+  font-size: var(--text-md);
+  line-height: var(--leading-base);
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: var(--space-6) 0;
+}
+
+.dot {
+  width: var(--space-2);
+  height: var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--rule);
+}
+
+.dotActive {
+  background: var(--blue);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.primary,
+.skip {
+  min-height: var(--touch-min);
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--radius-md);
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  cursor: pointer;
+}
+
+.primary {
+  min-width: calc(var(--space-16) * 3);
+  border: thin solid var(--blue);
+  background: var(--blue);
+  color: var(--on-accent);
+}
+
+.skip {
+  border: 0;
+  background: transparent;
+  color: var(--ink-3);
+}
+
+.primary:hover,
+.primary:focus-visible,
+.skip:hover,
+.skip:focus-visible {
+  opacity: 0.88;
+  outline: none;
+}
+
+.skip:hover,
+.skip:focus-visible {
+  background: var(--blue-dim);
+  color: var(--ink);
+}
+
+@media (max-width: 880px) {
+  .visual {
+    margin-top: var(--space-6);
+  }
+}
+
+@media (max-width: 640px) {
+  .text {
+    min-height: 0;
+  }
+
+  .primary,
+  .skip {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: var(--text-xl);
+  }
+
+  .visual {
+    width: var(--space-16);
+    height: var(--space-16);
+    font-size: var(--text-2xl);
+  }
+}

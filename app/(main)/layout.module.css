@@ -1,11 +1,12 @@
 .main {
   padding-top: var(--navbar-h);
   min-height: 100dvh;
+  background: var(--app-page);
 }
 
 @media (max-width: 640px) {
   .main {
-    padding-top: 48px;
+    padding-top: var(--mobile-navbar-h);
     padding-bottom: 60px;
   }
 }

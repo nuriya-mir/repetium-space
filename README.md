@@ -23,8 +23,9 @@ Repetium provides a non-evaluative, calm pre-course perception environment (*"Re
    - **House 1 (`house-1`) — Reference French Alphabet:** All 26 letters and diacritic variants (`DiacriticPopover`, `Letter3D`, `LetterGrid`) with 9 interactive perception activities (`CompareActivity`, `NeighborsActivity`, `BetweenActivity`, `AlphabetActivity`, `CloseLettersActivity`, `WhereIsActivity`, `GuessActivity`, `BuildActivity`).
    - **House 2 (`house-2`) — My Alphabet:** Multisensory drawing canvas (`upperPrint`, `lowerPrint`, `upperCursive`, `lowerCursive`, contour tracing and freehand modes) for building personal visual-motor letter memory.
    - **House 3 (`house-3`) — Sound Reference:** Phoneme-to-grapheme mapping across French vowels, nasals, and consonants.
-2. **20 Grapheme-Phoneme Exercise Groups (`app/(main)/exercises/g1` – `g20`):**
-   - Structured progression from single letters and letter pairs (`G1–G2`), vowels and nasal combinations (`G3–G4`), contextual readings (`G6`), silent final and internal letters (`G7–G9`), word endings and prefixes (`G10–G11`), syllable division and pseudoword decoding (`G13–G14`), prepositions (`G16`), visual word-length perception (`G19`), to semantic reading blocks (`G20`).
+2. **20 Grapheme-Phoneme Exercise Groups (`app/(main)/exercises/g1` – `g20`) & 6-Part Starting Check-In (`app/test/`):**
+   - Calm, non-graded 6-part starting check-in (`/test`) and daily practice session (`/session`) without registration or timers.
+   - Structured progression from single letters and letter pairs (`G1–G2`), vowels and nasal combinations (`G3–G4`), diacritics (`G5`), contextual readings (`G6`), silent final and internal letters (`G7–G9`), word endings and prefixes (`G10–G11`), syllable division and pseudoword decoding (`G13–G14`), prepositions (`G16`), visual word-length perception (`G19`), to semantic reading blocks (`G20`).
 3. **Cognitive Accessibility & Sensory Controls (`components/ui/SettingsPanel/`, `lib/hooks/usePreferences.ts`):**
    - Local-first preferences persisted in `localStorage` (`repetium_prefs`): dyslexia-friendly typography (`Lexend`), light/dark calm themes, audio playback speed (`0.75x / 1.0x / 1.25x`), and optional non-evaluative microphone toggle with full non-microphone fallback.
    - Calm pause screen (`components/PauseScreen/`) available at any moment without losing progress.

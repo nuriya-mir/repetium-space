@@ -33,6 +33,10 @@ export default function ExercisesPage() {
             <button key={name} className={styles.card} onClick={() => router.push('/exercises/g4')}>
               {name}
             </button>
+          ) : name === t.exercises.g5name ? (
+            <button key={name} className={styles.card} onClick={() => router.push('/exercises/g5')}>
+              {name}
+            </button>
           ) : name === t.exercises.g9name ? (
             <button key={name} className={styles.card} onClick={() => router.push('/exercises/g9')}>
               {name}

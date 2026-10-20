@@ -1,52 +1,110 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Logo } from '@/components/ui/Logo'
 import { useT, useI18n, LOCALES, LOCALE_LABELS } from '@/lib/i18n'
 import styles from './page.module.css'
 
-// Видео-заглушка с кнопкой Play (реальное видео подключается через videoSrc)
-const VIDEO_PLACEHOLDER = true // убрать, когда появится реальное видео
+const PREVIEW_WORDS = [
+  { prefix: "l'", grapheme: 'eau', suffix: '', ipa: '[lo]' },
+  { prefix: 'b', grapheme: 'eau', suffix: '', ipa: '[bo]' },
+  { prefix: 'chât', grapheme: 'eau', suffix: '', ipa: '[ʃa.to]' },
+]
 
-function VideoBlock({ className }: { className?: string }) {
+function HeroPreviewCard() {
   const t = useT()
-  const [playing, setPlaying] = useState(false)
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const [mode, setMode] = useState<'observe' | 'recall'>('observe')
+  const [wideSpacing, setWideSpacing] = useState(false)
+  const [revealed, setRevealed] = useState<Record<number, boolean>>({})
 
-  function toggle() {
-    if (!videoRef.current) { setPlaying(!playing); return }
-    if (playing) { videoRef.current.pause() } else { videoRef.current.play() }
-    setPlaying(!playing)
+  function speakFrench(text: string) {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return
+    window.speechSynthesis.cancel()
+    const utter = new SpeechSynthesisUtterance(text)
+    utter.lang = 'fr-FR'
+    utter.rate = 0.85
+    window.speechSynthesis.speak(utter)
+  }
+
+  function switchMode(next: 'observe' | 'recall') {
+    setMode(next)
+    setRevealed({})
   }
 
   return (
-    <div className={`${styles.videoBlock} ${className ?? ''}`} onClick={toggle}>
-      {VIDEO_PLACEHOLDER ? (
-        <>
-          <div className={styles.videoPlaceholderBg} aria-hidden="true" />
-          <div className={styles.videoMeta}>
-            <span className={styles.videoDuration}>~2 min</span>
-          </div>
-          <button className={styles.playBtn} aria-label="Play video">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <path d="M5 4.5l14 7.5-14 7.5V4.5z" fill="currentColor" />
-            </svg>
+    <div className={styles.previewCard}>
+      <div className={styles.previewHeader}>
+        <span className={styles.previewBadge}>{t.landing.hero.previewLabel}</span>
+        <div className={styles.previewControls}>
+          <button
+            type="button"
+            className={`${styles.previewTab} ${mode === 'observe' ? styles.previewTabActive : ''}`}
+            onClick={() => switchMode('observe')}
+          >
+            {t.landing.hero.previewObserve}
           </button>
-          <p className={styles.videoCaption}>{t.landing.hero.videoCaption}</p>
-        </>
-      ) : (
-        <>
-          <video ref={videoRef} className={styles.videoEl} playsInline />
-          {!playing && (
-            <button className={styles.playBtn} aria-label="Play video">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <path d="M5 4.5l14 7.5-14 7.5V4.5z" fill="currentColor" />
-              </svg>
-            </button>
-          )}
-        </>
-      )}
+          <button
+            type="button"
+            className={`${styles.previewTab} ${mode === 'recall' ? styles.previewTabActive : ''}`}
+            onClick={() => switchMode('recall')}
+          >
+            {t.landing.hero.previewRecall}
+          </button>
+          <button
+            type="button"
+            className={`${styles.previewTab} ${wideSpacing ? styles.previewTabActive : ''}`}
+            onClick={() => setWideSpacing((v) => !v)}
+          >
+            {t.landing.hero.previewSpacing}
+          </button>
+        </div>
+      </div>
+
+      <div className={`${styles.previewWords} ${wideSpacing ? styles.previewWordsWide : ''}`}>
+        {PREVIEW_WORDS.map((item, idx) => {
+          const fullWord = `${item.prefix}${item.grapheme}${item.suffix}`
+          const isShown = mode === 'observe' || revealed[idx]
+          return (
+            <div key={fullWord} className={styles.previewWordCard}>
+              <div className={styles.previewWordText}>
+                <span>{item.prefix}</span>
+                {isShown ? (
+                  <mark className={styles.previewGrapheme}>{item.grapheme}</mark>
+                ) : (
+                  <button
+                    type="button"
+                    className={styles.previewBlank}
+                    onClick={() => setRevealed((prev) => ({ ...prev, [idx]: true }))}
+                    aria-label={item.grapheme}
+                  >
+                    ···
+                  </button>
+                )}
+                <span>{item.suffix}</span>
+              </div>
+              <div className={styles.previewWordFooter}>
+                <span className={styles.previewIpa}>{item.ipa}</span>
+                <button
+                  type="button"
+                  className={styles.previewAudioBtn}
+                  onClick={() => speakFrench(fullWord)}
+                  aria-label={fullWord}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+                    <path d="M15.5 8.5a5 5 0 010 7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      <p className={styles.previewHint}>
+        {mode === 'observe' ? t.landing.hero.previewHintObserve : t.landing.hero.previewHintRecall}
+      </p>
     </div>
   )
 }
@@ -71,7 +129,7 @@ export default function LandingPage() {
       <nav className={styles.topbar}>
         <Logo markHeight={28} wordmarkSize={17} layout="horizontal" />
         <div className={styles.topbarActions}>
-          <div className={styles.topbarLocale} role="group" aria-label="Interface language">
+          <div className={styles.topbarLocale} role="group" aria-label={t.firstVisit.interfaceLanguage}>
             {LOCALES.map((loc) => (
               <button
                 key={loc}
@@ -84,7 +142,7 @@ export default function LandingPage() {
             ))}
           </div>
           <Link href="/login" className={styles.loginBtn}>{t.landing.login}</Link>
-          <Link href="/progress" className={styles.tryBtn}>{t.landing.try}</Link>
+          <Link href="/test" className={styles.tryBtn}>{t.landing.try}</Link>
         </div>
       </nav>
 
@@ -99,12 +157,12 @@ export default function LandingPage() {
           </h1>
           <p className={styles.subheadline}>{t.landing.hero.sub}</p>
           <div className={styles.heroCta}>
-            <Link href="/progress" className={styles.primaryBtn}>{t.landing.hero.cta}</Link>
+            <Link href="/test" className={styles.primaryBtn}>{t.landing.hero.cta}</Link>
             <p className={styles.heroNote}>{t.landing.hero.note}</p>
           </div>
         </div>
         <div className={styles.heroRight}>
-          <VideoBlock />
+          <HeroPreviewCard />
         </div>
       </header>
 
@@ -166,7 +224,6 @@ export default function LandingPage() {
           <span className={styles.sectionOverline}>{t.landing.howItWorks.overline}</span>
           <h2 className={styles.sectionTitle}>{t.landing.howItWorks.title}</h2>
           <div className={styles.stepsRow}>
-            <VideoBlock className={styles.stepsVideo} />
             <ol className={styles.stepsList}>
               {([
                 [t.landing.howItWorks.s1title, t.landing.howItWorks.s1desc],
@@ -307,7 +364,7 @@ export default function LandingPage() {
               <span key={i}>{line}{i === 0 && <br />}</span>
             ))}
           </h2>
-          <Link href="/progress" className={styles.primaryBtnLg}>{t.landing.cta.btn}</Link>
+          <Link href="/test" className={styles.primaryBtnLg}>{t.landing.cta.btn}</Link>
           <p className={styles.ctaNote}>{t.landing.cta.note}</p>
         </div>
       </section>
@@ -319,14 +376,14 @@ export default function LandingPage() {
           <span className={styles.footerCopy}>{t.landing.footer.slogan}</span>
           <div className={styles.footerLinks}>
             <Link href="/login" className={styles.footerLink}>{t.landing.footer.login}</Link>
-            <Link href="/progress" className={styles.footerLink}>{t.landing.footer.test}</Link>
+            <Link href="/test" className={styles.footerLink}>{t.landing.footer.test}</Link>
           </div>
         </div>
       </footer>
 
       {/* ── Sticky CTA ── */}
       <div className={`${styles.stickyCta} ${sticky ? styles.stickyVisible : ''}`}>
-        <Link href="/progress" className={styles.stickyBtn}>{t.landing.sticky}</Link>
+        <Link href="/test" className={styles.stickyBtn}>{t.landing.sticky}</Link>
       </div>
 
     </div>

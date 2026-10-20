@@ -4,6 +4,7 @@
 ───────────────────────────────────────────── */
 :root {
   /* Backgrounds */
+  --app-page: #FFFFFF;
   --paper:   #F4F1EB;
   --paper-s: #EDEAE2;
   --paper-e: #E4E0D6;
@@ -34,6 +35,13 @@
   /* Feedback: try again — warm orange (NO RED) */
   --flicker:     #E66400;
   --flicker-dim: rgba(230, 100, 0, 0.12);
+
+  /* Text placed on solid accent controls */
+  --on-accent: #FFFFFF;
+
+  /* Readable content widths */
+  --content-main: 720px;
+  --content-narrow: 560px;
 
   /* Exercise highlights */
   --hl-1: rgba(58, 110, 160, 0.16);
@@ -142,12 +150,14 @@
 
   /* Navbar height */
   --navbar-h: 56px;
+  --mobile-navbar-h: 48px;
 }
 
 /* ─────────────────────────────────────────────
    DARK MODE
 ───────────────────────────────────────────── */
 body.dark {
+  --app-page: #1A1C22;
   --paper:   #1A1C22;
   --paper-s: #22242E;
   --paper-e: #2A2C36;
@@ -172,6 +182,8 @@ body.dark {
 
   --flicker:     #F0916A;
   --flicker-dim: rgba(240, 145, 106, 0.12);
+
+  --on-accent: #FFFFFF;
 
   --hl-1: rgba(100, 160, 210, 0.20);
   --hl-2: rgba(80, 160, 120, 0.22);

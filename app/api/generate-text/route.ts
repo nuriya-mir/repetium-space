@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     // Supabase not available — generate directly
   }
 
-  const target = (group_id === 'g4' || group_id === 'g7' || group_id === 'g8' || group_id === 'g10' || group_id === 'g16') ? letter_targets.join('|') : (letter_targets[0] ?? '')
+  const target = (group_id === 'g4' || group_id === 'g5' || group_id === 'g7' || group_id === 'g8' || group_id === 'g10' || group_id === 'g16') ? letter_targets.join('|') : (letter_targets[0] ?? '')
   const { system, user } = buildPrompt(group_id, target)
 
   let content: string
@@ -58,8 +58,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: String(err) }, { status: 502 })
   }
 
-  // G4, G6, G7, G10, G13, G14, G16, G19, G20 have no occurrence/position constraints — text is used as-is
-  if (group_id !== 'g4' && group_id !== 'g6' && group_id !== 'g7' && group_id !== 'g8' && group_id !== 'g9' && group_id !== 'g10' && group_id !== 'g13' && group_id !== 'g14' && group_id !== 'g16' && group_id !== 'g19' && group_id !== 'g20') {
+  // G4, G5, G6, G7, G10, G13, G14, G16, G19, G20 have no occurrence/position constraints — text is used as-is
+  if (group_id !== 'g4' && group_id !== 'g5' && group_id !== 'g6' && group_id !== 'g7' && group_id !== 'g8' && group_id !== 'g9' && group_id !== 'g10' && group_id !== 'g13' && group_id !== 'g14' && group_id !== 'g16' && group_id !== 'g19' && group_id !== 'g20') {
     const escaped = target.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
     const countPattern = new RegExp(escaped, 'gi')
     const endOfWordPattern = new RegExp(escaped + '(?=[^a-zA-ZÀ-ÿœæ]|$)', 'gi')
@@ -203,6 +203,19 @@ function buildPrompt(group_id: string, target: string): { system: string; user: 
     return {
       system: `Tu es un générateur de textes pédagogiques en français pour l'apprentissage de la lecture. Tu crées des textes motivants qui mettent en valeur des suffixes cibles.`,
       user: `Écris un texte motivant et chaleureux en français de 130 à 160 mots.\n\nRègles:\n- Uniquement des phrases déclaratives (pas de ? ni de !)\n- Ton chaud et bienveillant, sans sujets négatifs\n- Pas de listes ni de tirets\n- ${endingRules}\n- Les mots avec les suffixes cibles doivent être répartis uniformément dans tout le texte\n- Alterne phrases courtes (5–8 mots) et moyennes (9–14 mots)\n\nRetourne uniquement le texte français, rien d'autre.`,
+    }
+  }
+
+  // G5: diacritics — text rich in words containing the target accented letters
+  if (group_id === 'g5') {
+    const letters = target.split('|').filter(Boolean)
+    const minPer = letters.length === 1 ? 10 : Math.max(3, Math.floor(10 / letters.length))
+    const letterRules = letters.length === 1
+      ? `Minimum 10 mots contenant la lettre «${letters[0]}». La lettre «${letters[0]}» doit apparaître au moins 10 fois dans le texte.`
+      : letters.map(l => `Minimum ${minPer} mots contenant «${l}»`).join('; ') + `. Total au moins 10 occurrences des lettres cibles (${letters.join(', ')}) réparties uniformément.`
+    return {
+      system: `Tu es un générateur de textes pédagogiques en français pour l'apprentissage des signes diacritiques. Tu crées des textes motivants qui contiennent de nombreux mots avec les lettres accentuées cibles.`,
+      user: `Écris un texte motivant et chaleureux en français de 90 à 110 mots.\n\nRègles:\n- Uniquement des phrases déclaratives (pas de ? ni de !)\n- Ton chaud et bienveillant, sans sujets négatifs\n- Pas de listes ni de tirets\n- ${letterRules}\n- Les lettres cibles doivent être réparties uniformément dans tout le texte\n- Alterne phrases courtes (5–8 mots) et moyennes (9–14 mots)\n\nRetourne uniquement le texte français, rien d'autre.`,
     }
   }
 

@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import { useT } from '@/lib/i18n'
 import { useRecentExercises } from '@/lib/hooks/useRecentExercises'
+import { useFirstVisitState } from '@/lib/first-visit/state'
+import { useDailySessionState } from '@/lib/daily-session/state'
 import styles from './page.module.css'
 
 function getGreeting(t: ReturnType<typeof useT>): string {
@@ -72,6 +74,27 @@ const IPA_SOUNDS = [
 export default function HomePage() {
   const t = useT()
   const recentExercises = useRecentExercises()
+  const { state: firstVisit, ready: firstVisitReady } = useFirstVisitState()
+  const { state: dailySession, ready: dailySessionReady } = useDailySessionState()
+  const showFirstLetters = firstVisitReady && Boolean(
+    firstVisit &&
+    firstVisit.onboarding.firstLettersStatus !== 'completed' &&
+    ['dashboard', 'first_letters'].includes(firstVisit.stage)
+  )
+  const dailyHomeCopy = dailySession?.status === 'completed'
+    ? {
+        title: t.dailySession.home.completeTitle,
+        text: t.dailySession.home.completeText,
+      }
+    : dailySession && dailySession.status !== 'idle'
+      ? {
+          title: t.dailySession.home.resumeTitle,
+          text: t.dailySession.home.resumeText,
+        }
+      : {
+          title: t.dailySession.home.startTitle,
+          text: t.dailySession.home.startText,
+        }
 
   return (
     <div className={styles.page}>
@@ -80,6 +103,32 @@ export default function HomePage() {
         <span className={styles.greetingTime}>{getGreeting(t)}</span>
         <h1 className={styles.greetingText}>{t.home.continueQ}</h1>
       </div>
+
+      {showFirstLetters ? (
+        <Link href="/onboarding/first-letters" className={styles.recLink}>
+          <div className={styles.rec}>
+            <div className={styles.recContent}>
+              <span className={styles.recEyebrow}>{t.firstVisit.home.eyebrow}</span>
+              <span className={styles.recTitle}>{t.firstVisit.home.title}</span>
+              <span className={styles.recSub}>{t.firstVisit.home.text}</span>
+            </div>
+            <span className={styles.recArrow} aria-hidden="true">→</span>
+          </div>
+        </Link>
+      ) : null}
+
+      {!showFirstLetters && dailySessionReady ? (
+        <Link href="/session" className={styles.recLink}>
+          <div className={styles.rec}>
+            <div className={styles.recContent}>
+              <span className={styles.recEyebrow}>{t.dailySession.home.eyebrow}</span>
+              <span className={styles.recTitle}>{dailyHomeCopy.title}</span>
+              <span className={styles.recSub}>{dailyHomeCopy.text}</span>
+            </div>
+            <span className={styles.recArrow} aria-hidden="true">→</span>
+          </div>
+        </Link>
+      ) : null}
 
       {/* Houses grid */}
       <section>

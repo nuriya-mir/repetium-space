@@ -1,4 +1,5 @@
 import { Navbar } from '@/components/layout/Navbar'
+import { DailySessionResume } from '@/components/daily-session/DailySessionResume'
 import styles from './layout.module.css'
 
 export default function MainLayout({
@@ -10,6 +11,7 @@ export default function MainLayout({
     <>
       <Navbar />
       <main className={styles.main}>
+        <DailySessionResume />
         {children}
       </main>
     </>

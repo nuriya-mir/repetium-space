@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   height: var(--navbar-h);
-  background: var(--glass);
+  background: var(--app-page);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border-bottom: 1px solid var(--glass-border);
@@ -69,23 +69,27 @@
   gap: var(--space-2);
 }
 
+/* Hidden on desktop. Without this rule the mobile logo and locale
+   switcher are rendered as a second, unstyled row in the top-left. */
+.mobileTopBar {
+  display: none;
+}
+
 /* Locale toggle */
 .localeSwitcher {
   display: flex;
   align-items: center;
-  gap: 2px;
-  background: var(--paper-s);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-md);
-  padding: 2px;
+  gap: var(--space-2);
+  background: transparent;
 }
 
 .localeBtn {
-  height: 26px;
-  padding: 0 var(--space-2);
-  border: none;
+  width: var(--touch-min);
+  height: var(--touch-min);
+  padding: 0;
+  border: 1px solid var(--rule);
   background: transparent;
-  border-radius: calc(var(--radius-md) - 2px);
+  border-radius: var(--radius-md);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--ink-3);
@@ -99,14 +103,13 @@
 }
 
 .localeBtn.localeActive {
-  background: var(--paper);
+  background: transparent;
   color: var(--blue);
-  box-shadow: var(--shadow-sm);
 }
 
 .iconBtn {
-  width: 34px;
-  height: 34px;
+  width: var(--touch-min);
+  height: var(--touch-min);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -131,7 +134,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--glass);
+  background: var(--app-page);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border-top: 1px solid var(--glass-border);
@@ -171,6 +174,52 @@
   .navbar {
     display: none;
   }
+
+  .mobileTopBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: var(--mobile-navbar-h);
+    padding: 0 var(--space-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--app-page);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .mobileTopLogo {
+    min-height: var(--touch-min);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .mobileTopLocale {
+    min-height: var(--touch-min);
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .mobileLocaleBtn {
+    min-width: var(--touch-min);
+    min-height: var(--touch-min);
+    padding: 0 var(--space-2);
+    border: 1px solid var(--rule);
+    background: transparent;
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-3);
+    cursor: pointer;
+  }
+
+  .mobileLocaleActive {
+    color: var(--blue);
+  }
+
   .mobileNav {
     display: grid;
   }

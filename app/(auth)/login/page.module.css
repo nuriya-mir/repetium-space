@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-6);
-  background: var(--paper);
+  background: var(--app-page);
 }
 
 .card {
@@ -30,10 +30,28 @@
   line-height: var(--leading-base);
 }
 
+.savedResult {
+  margin-bottom: var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  border: thin solid var(--blue-line);
+  border-radius: var(--radius-md);
+  background: var(--blue-dim);
+  color: var(--ink-2);
+  font-size: var(--text-sm);
+  line-height: var(--leading-base);
+  text-align: center;
+}
+
 .form {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+}
+
+.label {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--ink-2);
 }
 
 .input {
@@ -53,6 +71,12 @@
 .input:focus {
   border-color: var(--blue-line);
   box-shadow: 0 0 0 3px var(--blue-dim);
+}
+
+.error {
+  color: var(--flicker);
+  font-size: var(--text-sm);
+  line-height: var(--leading-base);
 }
 
 .submitBtn {
@@ -93,4 +117,17 @@
   font-size: var(--text-base);
   color: var(--ink-2);
   line-height: var(--leading-base);
+}
+
+@media (max-width: 640px) {
+  .page {
+    align-items: flex-start;
+    padding: var(--space-6) var(--space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: var(--space-8) var(--space-5);
+  }
 }

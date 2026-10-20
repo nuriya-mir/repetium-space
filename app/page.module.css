@@ -1,6 +1,6 @@
 .landing {
   min-height: 100dvh;
-  background: var(--paper);
+  background: var(--app-page);
 }
 
 /* ── Лендинговый навбар ── */
@@ -13,7 +13,7 @@
   justify-content: space-between;
   padding: 0 var(--space-8);
   height: var(--navbar-h);
-  background: var(--paper);
+  background: var(--app-page);
   border-bottom: 1px solid var(--rule);
 }
 
@@ -37,19 +37,17 @@
 .topbarLocale {
   display: flex;
   align-items: center;
-  gap: 2px;
-  background: var(--paper-s);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-md);
-  padding: 2px;
+  gap: var(--space-1);
+  background: transparent;
 }
 
 .topbarLocaleBtn {
-  height: 26px;
-  padding: 0 var(--space-2);
-  border: none;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--rule);
   background: transparent;
-  border-radius: calc(var(--radius-md) - 2px);
+  border-radius: var(--radius-md);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--ink-3);
@@ -61,9 +59,8 @@
 .topbarLocaleBtn:hover { color: var(--ink); }
 
 .topbarLocaleActive {
-  background: var(--paper);
+  background: transparent;
   color: var(--blue);
-  box-shadow: var(--shadow-sm);
 }
 
 .loginBtn {
@@ -194,80 +191,148 @@
 }
 .primaryBtnLg:hover { opacity: 0.88; }
 
-/* ── Video block ── */
-.videoBlock {
-  position: relative;
+/* ── Hero Interactive Preview Card ── */
+.previewCard {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  background: var(--paper-e);
+  background: var(--paper);
   border: 1px solid var(--rule);
   border-radius: var(--radius-xl);
-  overflow: hidden;
-  cursor: pointer;
+  padding: var(--space-6);
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-5);
+  box-shadow: var(--shadow-sm);
 }
 
-.videoPlaceholderBg {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, var(--blue-dim) 0%, var(--paper-s) 60%, var(--gold-dim) 100%);
+.previewHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
-.videoMeta {
-  position: absolute;
-  top: var(--space-4);
-  right: var(--space-4);
-  z-index: 1;
-}
-
-.videoDuration {
+.previewBadge {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--ink-3);
-  background: var(--paper);
-  padding: 2px var(--space-2);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--rule);
+  letter-spacing: var(--tracking-mono);
 }
 
-.playBtn {
-  position: relative;
-  z-index: 1;
-  width: 60px;
-  height: 60px;
-  background: var(--paper);
-  border: none;
-  border-radius: 50%;
+.previewControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.previewTab {
+  padding: 6px var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+  background: var(--app-page);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
+}
+
+.previewTab:hover {
+  color: var(--ink);
+}
+
+.previewTabActive {
+  background: var(--blue-dim);
+  border-color: var(--blue-line);
+  color: var(--blue);
+  font-weight: 500;
+}
+
+.previewWords {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.previewWordsWide .previewWordText {
+  font-family: var(--font-dyslexia);
+  letter-spacing: 0.12em;
+}
+
+.previewWordCard {
+  background: var(--app-page);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.previewWordText {
+  font-family: var(--font-reading);
+  font-size: var(--text-xl);
+  color: var(--ink);
+  line-height: 1.3;
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.previewGrapheme {
+  background: var(--gold-dim);
+  color: var(--ink);
+  border-bottom: 2px solid var(--gold);
+  padding: 0 3px;
+  border-radius: var(--radius-sm);
+}
+
+.previewBlank {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  color: var(--blue);
+  background: var(--blue-dim);
+  border: 1px dashed var(--blue-line);
+  border-radius: var(--radius-sm);
+  padding: 1px 6px;
+  margin: 0 2px;
+  cursor: pointer;
+}
+
+.previewWordFooter {
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: var(--blue);
-  cursor: pointer;
-  box-shadow: var(--shadow-md);
-  transition: transform var(--duration-fast), box-shadow var(--duration-fast);
-}
-.videoBlock:hover .playBtn {
-  transform: scale(1.07);
-  box-shadow: var(--shadow-lg);
+  gap: var(--space-2);
 }
 
-.videoCaption {
-  position: relative;
-  z-index: 1;
-  font-size: var(--text-sm);
+.previewIpa {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
   color: var(--ink-3);
-  text-align: center;
-  padding: 0 var(--space-4);
 }
 
-.videoEl {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.previewAudioBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--blue);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--duration-fast);
+}
+
+.previewAudioBtn:hover {
+  background: var(--blue-dim);
+}
+
+.previewHint {
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+  line-height: var(--leading-base);
+  margin: 0;
 }
 
 /* ── Sections ── */
@@ -276,7 +341,7 @@
 }
 
 .alt {
-  background: var(--paper-s);
+  background: var(--app-page);
 }
 
 .sectionInner {
@@ -350,27 +415,26 @@
 
 /* ── Steps ── */
 .stepsRow {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: var(--space-10);
-  align-items: start;
-}
-
-.stepsVideo {
-  /* inherits .videoBlock */
+  display: block;
 }
 
 .stepsList {
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-5);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+  padding: 0;
+  margin: 0;
 }
 
 .step {
   display: flex;
   gap: var(--space-4);
   align-items: flex-start;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
 }
 
 .stepNum {
@@ -518,7 +582,7 @@
 /* ── CTA section ── */
 .ctaSection {
   text-align: center;
-  background: var(--paper-e);
+  background: var(--app-page);
 }
 
 .ctaTitle {
@@ -637,13 +701,13 @@
 
   .overline, .subheadline { text-align: center; }
 
-  .stepsRow {
+  .stepsList {
     grid-template-columns: 1fr;
-    gap: var(--space-8);
   }
 
-  .stepsVideo { order: 2; }
-  .stepsList { order: 1; }
+  .previewWords {
+    grid-template-columns: 1fr;
+  }
 
   .personaGrid,
   .features,
