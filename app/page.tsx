@@ -1,15 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Logo } from '@/components/ui/Logo'
 import { useT, useI18n, LOCALES, LOCALE_LABELS } from '@/lib/i18n'
 import styles from './page.module.css'
 
 const PREVIEW_WORDS = [
-  { prefix: "l'", grapheme: 'eau', suffix: '', ipa: '[lo]' },
-  { prefix: 'b', grapheme: 'eau', suffix: '', ipa: '[bo]' },
-  { prefix: 'chât', grapheme: 'eau', suffix: '', ipa: '[ʃa.to]' },
+  { prefix: '', grapheme: 'eau', suffix: '', ipa: '[o]', audio: '/audio/preview/eau.m4a' },
+  { prefix: 'b', grapheme: 'eau', suffix: '', ipa: '[bo]', audio: '/audio/preview/beau.m4a' },
+  { prefix: 'chât', grapheme: 'eau', suffix: '', ipa: '[ʃato]', audio: '/audio/preview/chateau.m4a' },
 ]
 
 function HeroPreviewCard() {
@@ -17,14 +17,28 @@ function HeroPreviewCard() {
   const [mode, setMode] = useState<'observe' | 'recall'>('observe')
   const [wideSpacing, setWideSpacing] = useState(false)
   const [revealed, setRevealed] = useState<Record<number, boolean>>({})
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
-  function speakFrench(text: string) {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return
-    window.speechSynthesis.cancel()
-    const utter = new SpeechSynthesisUtterance(text)
-    utter.lang = 'fr-FR'
-    utter.rate = 0.85
-    window.speechSynthesis.speak(utter)
+  function playWordAudio(audioUrl: string, fallbackText: string) {
+    if (typeof window === 'undefined') return
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current.currentTime = 0
+    }
+    const audio = new Audio(audioUrl)
+    audioRef.current = audio
+    audio.play().catch(() => {
+      if (!('speechSynthesis' in window)) return
+      window.speechSynthesis.cancel()
+      const utter = new SpeechSynthesisUtterance(fallbackText)
+      utter.lang = 'fr-FR'
+      const frVoice = window.speechSynthesis
+        .getVoices()
+        .find((v) => v.lang === 'fr-FR' || v.lang === 'fr_FR' || v.lang.startsWith('fr'))
+      if (frVoice) utter.voice = frVoice
+      utter.rate = 0.88
+      window.speechSynthesis.speak(utter)
+    })
   }
 
   function switchMode(next: 'observe' | 'recall') {
@@ -67,8 +81,8 @@ function HeroPreviewCard() {
           const isShown = mode === 'observe' || revealed[idx]
           return (
             <div key={fullWord} className={styles.previewWordCard}>
-              <div className={styles.previewWordText}>
-                <span>{item.prefix}</span>
+              <div className={styles.previewWordText} lang="fr">
+                {item.prefix}
                 {isShown ? (
                   <mark className={styles.previewGrapheme}>{item.grapheme}</mark>
                 ) : (
@@ -81,14 +95,14 @@ function HeroPreviewCard() {
                     ···
                   </button>
                 )}
-                <span>{item.suffix}</span>
+                {item.suffix}
               </div>
               <div className={styles.previewWordFooter}>
                 <span className={styles.previewIpa}>{item.ipa}</span>
                 <button
                   type="button"
                   className={styles.previewAudioBtn}
-                  onClick={() => speakFrench(fullWord)}
+                  onClick={() => playWordAudio(item.audio, fullWord)}
                   aria-label={fullWord}
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
