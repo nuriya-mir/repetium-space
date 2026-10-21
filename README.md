@@ -1,7 +1,7 @@
 # Repetium — Open Web Environment for Calm Adult Grapheme-Phoneme Practice & Cognitive Accessibility
 
 **Live Web Prototype:** [https://repetiumspace.vercel.app](https://repetiumspace.vercel.app)  
-**Author:** Nuriya Mirsalimova (Almaty, Kazakhstan)  
+**Author:** Nuriya Mirsalimova (Kazakhstan)  
 **Code License:** [MIT](./LICENSE) (OSI-approved Free & Open Source Software)  
 **Service Model:** Non-profit public good — free of charge for learners, no paywalls, no subscriptions
 
